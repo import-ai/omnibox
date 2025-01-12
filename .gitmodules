@@ -7,3 +7,6 @@
 [submodule "backend"]
 	path = backend
 	url = git@github.com:import-ai/magic-box-backend.git
+[submodule "client/chrome"]
+	path = client/chrome
+	url = git@github.com:import-ai/magic-box-client-chrome.git
