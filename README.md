@@ -1,1 +1,1 @@
-# magic-box
+# Magic Box
