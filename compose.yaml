@@ -1,0 +1,90 @@
+name: magic-box
+
+services:
+  web:
+    image: ghcr.io/import-ai/magic-box-web:main
+    ports:
+      - 8000:80
+    restart: always
+    depends_on:
+      backend:
+        condition: service_healthy
+
+  backend:
+    image: ghcr.io/import-ai/magic-box-backend:main
+    restart: always
+    environment:
+      MBB_DB_URL: "postgresql+asyncpg://magic_box:magic_box@postgres:5432/magic_box"
+      MBB_WIZARD_BASE_URL: "http://wizard:8000"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O-", "http://127.0.0.1:8000/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    depends_on:
+      wizard:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+
+  wizard:
+    image: ghcr.io/import-ai/magic-box-wizard:main
+    restart: always
+    environment:
+      MBW_DB_URL: "postgresql+asyncpg://magic_box:magic_box@postgres:5432/magic_box"
+
+      MBW_VECTOR_HOST: chromadb
+      MBW_VECTOR_PORT: 8000
+
+      MBW_BACKEND_BASE_URL: "http://backend:8000"
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O-", "http://127.0.0.1:8000/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    depends_on:
+      chromadb:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:17-alpine
+    restart: always
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: magic_box
+      POSTGRES_USER: magic_box
+      POSTGRES_PASSWORD: magic_box
+    healthcheck:
+      test: ["CMD", "pg_isready", "-q", "-d", "magic_box", "-U", "magic_box"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  chromadb:
+    image: chromadb/chroma:0.5.23
+    restart: always
+    environment:
+      ANONYMIZED_TELEMETRY: FALSE
+    volumes:
+      - chroma:/chroma/chroma
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8000/api/v1/heartbeat"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  init:
+    image: alpine/curl:8.10.0
+    command: ['http://backend:8000/api/v1/namespaces', '-d', '{"name": "test"}', '-H', 'Content-Type: application/json']
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  chroma:
+  postgres:
