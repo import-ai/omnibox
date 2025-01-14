@@ -14,6 +14,7 @@ services:
     image: ghcr.io/import-ai/magic-box-backend:main
     restart: always
     environment:
+      ENV: "prod"
       MBB_DB_URL: "postgresql+asyncpg://magic_box:magic_box@postgres:5432/magic_box"
       MBB_WIZARD_BASE_URL: "http://wizard:8000"
     healthcheck:
@@ -24,6 +25,8 @@ services:
     depends_on:
       wizard:
         condition: service_healthy
+      wizard-worker:
+        condition: service_healthy
       postgres:
         condition: service_healthy
 
@@ -31,11 +34,10 @@ services:
     image: ghcr.io/import-ai/magic-box-wizard:main
     restart: always
     environment:
+      ENV: "prod"
       MBW_DB_URL: "postgresql+asyncpg://magic_box:magic_box@postgres:5432/magic_box"
-
       MBW_VECTOR_HOST: chromadb
       MBW_VECTOR_PORT: 8000
-
       MBW_BACKEND_BASE_URL: "http://backend:8000"
     env_file:
       - .env
@@ -46,6 +48,30 @@ services:
       retries: 5
     depends_on:
       chromadb:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+
+  wizard-worker:
+    image: ghcr.io/import-ai/magic-box-wizard:main
+    restart: always
+    environment:
+      ENV: "prod"
+      MBW_DB_URL: "postgresql+asyncpg://magic_box:magic_box@postgres:5432/magic_box"
+      MBW_VECTOR_HOST: chromadb
+      MBW_VECTOR_PORT: 8000
+      MBW_BACKEND_BASE_URL: "http://backend:8000"
+    entrypoint: ["python", "main.py"]
+    command: ["--workers", "1"]
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep python"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    depends_on:
+      wizard:
         condition: service_healthy
       postgres:
         condition: service_healthy
