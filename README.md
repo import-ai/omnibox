@@ -23,7 +23,7 @@ To get started with Magic Box, follow the deployment instructions below and set 
 1. Download the [compose.yaml](./compose.yaml) file.  
 2. Download the [.env.example](./.env.example) file, rename it to `.env`, and configure it with your OpenAI-compatible API key.  
 3. Run `docker compose up -d`.  
-4. Open your browser and go to [localhost:8000#/test](http://localhost:8000#/test).  
+4. Open your browser and go to [localhost:8080#/test](http://localhost:8080#/test).  
 
 ```shell
 wget -O 'compose.yaml' 'https://raw.githubusercontent.com/import-ai/magic-box/refs/heads/main/compose.yaml'
@@ -41,7 +41,7 @@ docker compose up -d
 
 | Key | Value for demo |
 | --- | --- |
-| API Base URL | `http://localhost:8000` |
+| API Base URL | `http://localhost:8080` |
 | API Key | `null` |
 | Namespace | `test` |
 | Space Type | `private` |
