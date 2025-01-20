@@ -3,6 +3,8 @@ name: magic-box
 services:
   web:
     image: ghcr.io/import-ai/magic-box-web:main
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
     ports:
       - 8000:80
     restart: always
@@ -13,6 +15,8 @@ services:
   backend:
     image: ghcr.io/import-ai/magic-box-backend:main
     restart: always
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
     environment:
       ENV: "prod"
       MBB_DB_URL: "postgresql+asyncpg://magic_box:magic_box@postgres:5432/magic_box"
@@ -33,6 +37,8 @@ services:
   wizard:
     image: ghcr.io/import-ai/magic-box-wizard:main
     restart: always
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
     environment:
       ENV: "prod"
       MBW_DB_URL: "postgresql+asyncpg://magic_box:magic_box@postgres:5432/magic_box"
@@ -61,6 +67,8 @@ services:
       MBW_VECTOR_HOST: chromadb
       MBW_VECTOR_PORT: 8000
       MBW_BACKEND_BASE_URL: "http://backend:8000"
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
     entrypoint: ["python", "main.py"]
     command: ["--workers", "1"]
     env_file:
@@ -81,6 +89,7 @@ services:
     restart: always
     volumes:
       - postgres:/var/lib/postgresql/data
+      - "/etc/localtime:/etc/localtime:ro"
     environment:
       POSTGRES_DB: magic_box
       POSTGRES_USER: magic_box
@@ -98,6 +107,7 @@ services:
       ANONYMIZED_TELEMETRY: FALSE
     volumes:
       - chroma:/chroma/chroma
+      - "/etc/localtime:/etc/localtime:ro"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://127.0.0.1:8000/api/v1/heartbeat"]
       interval: 30s
