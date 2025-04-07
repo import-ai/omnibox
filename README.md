@@ -1,10 +1,10 @@
-# Magic Box
+# OmniBox
 
 **This project is in a very early stages of development. Many features and documentation are missing, and it is not ready for production use.**
 
 ## Overview
 
-Magic Box is designed as a second brain that you can put everything in, and get everything out. It aims to be a comprehensive tool for managing and retrieving information efficiently. Whether it's notes, documents, or any other type of data, Magic Box helps you organize and access it with ease.
+OmniBox is designed as a second brain that you can put everything in, and get everything out. It aims to be a comprehensive tool for managing and retrieving information efficiently. Whether it's notes, documents, or any other type of data, OmniBox helps you organize and access it with ease.
 
 ## Features
 
@@ -16,7 +16,7 @@ Magic Box is designed as a second brain that you can put everything in, and get 
 
 ## Getting Started
 
-To get started with Magic Box, follow the deployment instructions below and set up the browser plugin for an enhanced experience.
+To get started with OmniBox, follow the deployment instructions below and set up the browser plugin for an enhanced experience.
 
 ## Deployment
 
