@@ -2,3 +2,5 @@
 .vscode
 .idea
 .DS_Store
+compose.override.yaml
+data

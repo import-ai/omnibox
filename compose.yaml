@@ -19,7 +19,7 @@ services:
       - "/etc/localtime:/etc/localtime:ro"
     environment:
       ENV: "prod"
-      OBB_DB_URL: "postgresql+asyncpg://magic_box:magic_box@postgres:5432/magic_box"
+      OBB_DB_URL: "postgresql+asyncpg://omnibox:omnibox@postgres:5432/omnibox"
       OBB_WIZARD_BASE_URL: "http://wizard:8000"
     healthcheck:
       test: ["CMD", "wget", "-q", "-O-", "http://127.0.0.1:8000/api/v1/health"]
@@ -39,7 +39,7 @@ services:
       - "/etc/localtime:/etc/localtime:ro"
     environment:
       ENV: "prod"
-      OBW_DB_URL: "postgresql+asyncpg://magic_box:magic_box@postgres:5432/magic_box"
+      OBW_DB_URL: "postgresql+asyncpg://omnibox:omnibox@postgres:5432/omnibox"
       OBW_VECTOR_HOST: chromadb
       OBW_VECTOR_PORT: 8000
       OBW_BACKEND_BASE_URL: "http://backend:8000"
@@ -59,7 +59,7 @@ services:
     restart: always
     environment:
       ENV: "prod"
-      OBW_DB_URL: "postgresql+asyncpg://magic_box:magic_box@postgres:5432/magic_box"
+      OBW_DB_URL: "postgresql+asyncpg://omnibox:omnibox@postgres:5432/omnibox"
       OBW_VECTOR_HOST: chromadb
       OBW_VECTOR_PORT: 8000
       OBW_BACKEND_BASE_URL: "http://backend:8000"
@@ -87,11 +87,11 @@ services:
       - postgres:/var/lib/postgresql/data
       - "/etc/localtime:/etc/localtime:ro"
     environment:
-      POSTGRES_DB: magic_box
-      POSTGRES_USER: magic_box
-      POSTGRES_PASSWORD: magic_box
+      POSTGRES_DB: omnibox
+      POSTGRES_USER: omnibox
+      POSTGRES_PASSWORD: omnibox
     healthcheck:
-      test: ["CMD", "pg_isready", "-q", "-d", "magic_box", "-U", "magic_box"]
+      test: ["CMD", "pg_isready", "-q", "-d", "omnibox", "-U", "omnibox"]
       interval: 30s
       timeout: 10s
       retries: 5
