@@ -1,12 +1,12 @@
 [submodule "web"]
 	path = web
-	url = git@github.com:import-ai/magic-box-web.git
+	url = git@github.com:import-ai/omnibox-web.git
 [submodule "wizard"]
 	path = wizard
-	url = git@github.com:import-ai/magic-box-wizard.git
+	url = git@github.com:import-ai/omnibox-wizard.git
 [submodule "backend"]
 	path = backend
-	url = git@github.com:import-ai/magic-box-backend.git
+	url = git@github.com:import-ai/omnibox-backend.git
 [submodule "client/chrome"]
 	path = client/chrome
-	url = git@github.com:import-ai/magic-box-client-chrome.git
+	url = git@github.com:import-ai/omnibox-client-chrome.git

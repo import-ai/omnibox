@@ -26,14 +26,14 @@ To get started with Magic Box, follow the deployment instructions below and set 
 4. Open your browser and go to [localhost:8080#/test](http://localhost:8080#/test).  
 
 ```shell
-wget -O 'compose.yaml' 'https://raw.githubusercontent.com/import-ai/magic-box/refs/heads/main/compose.yaml'
-wget -O '.env' 'https://raw.githubusercontent.com/import-ai/magic-box/refs/heads/main/.env.example'
+wget -O 'compose.yaml' 'https://raw.githubusercontent.com/import-ai/omnibox/refs/heads/main/compose.yaml'
+wget -O '.env' 'https://raw.githubusercontent.com/import-ai/omnibox/refs/heads/main/.env.example'
 docker compose up -d
 ```
 
 ## Browser Plugin
 
-1. Clone [github.com/import-ai/magic-box-client-chrome](https://github.com/import-ai/magic-box-client-chrome.git).
+1. Clone [github.com/import-ai/omnibox-client-chrome](https://github.com/import-ai/omnibox-client-chrome.git).
 2. Open Chrome, go to `chrome://extensions/`, enable "Developer mode" in the top right corner.
 3. Click "Load unpacked" and select the cloned repository folder.
 4. The extension should now be loaded and ready to use.
