@@ -17,14 +17,14 @@ services:
     restart: always
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
+    env_file:
+      - .env
     environment:
-      ENV: "prod"
-      OBB_DB_URL: "postgresql+asyncpg://omnibox:omnibox@postgres:5432/omnibox"
       OBB_WIZARD_BASE_URL: "http://wizard:8000"
     healthcheck:
-      test: ["CMD", "wget", "-q", "-O-", "http://127.0.0.1:8000/api/v1/health"]
-      interval: 30s
-      timeout: 10s
+      test: [ "CMD", "wget", "-q", "-O-", "http://127.0.0.1:${OBB_PORT:-8000}/api/v1/health" ]
+      interval: 5s
+      timeout: 3s
       retries: 5
     depends_on:
       wizard:
@@ -39,7 +39,6 @@ services:
       - "/etc/localtime:/etc/localtime:ro"
     environment:
       ENV: "prod"
-      OBW_DB_URL: "postgresql+asyncpg://omnibox:omnibox@postgres:5432/omnibox"
       OBW_VECTOR_HOST: chromadb
       OBW_VECTOR_PORT: 8000
       OBW_BACKEND_BASE_URL: "http://backend:8000"
@@ -47,8 +46,8 @@ services:
       - .env
     healthcheck:
       test: ["CMD", "wget", "-q", "-O-", "http://127.0.0.1:8000/api/v1/health"]
-      interval: 30s
-      timeout: 10s
+      interval: 5s
+      timeout: 3s
       retries: 5
     depends_on:
       chromadb:
@@ -59,7 +58,6 @@ services:
     restart: always
     environment:
       ENV: "prod"
-      OBW_DB_URL: "postgresql+asyncpg://omnibox:omnibox@postgres:5432/omnibox"
       OBW_VECTOR_HOST: chromadb
       OBW_VECTOR_PORT: 8000
       OBW_BACKEND_BASE_URL: "http://backend:8000"
@@ -71,11 +69,11 @@ services:
       - .env
     healthcheck:
       test: ["CMD-SHELL", "pgrep python"]
-      interval: 30s
-      timeout: 10s
+      interval: 5s
+      timeout: 3s
       retries: 5
     depends_on:
-      wizard:
+      chromadb:
         condition: service_healthy
       backend:
         condition: service_healthy
@@ -87,13 +85,13 @@ services:
       - postgres:/var/lib/postgresql/data
       - "/etc/localtime:/etc/localtime:ro"
     environment:
-      POSTGRES_DB: omnibox
-      POSTGRES_USER: omnibox
-      POSTGRES_PASSWORD: omnibox
+      POSTGRES_DB: ${OBB_DB_DATABASE:-omnibox}
+      POSTGRES_USER: ${OBB_DB_USERNAME:-omnibox}
+      POSTGRES_PASSWORD: ${OBB_DB_PASSWORD:-omnibox}
     healthcheck:
       test: ["CMD", "pg_isready", "-q", "-d", "omnibox", "-U", "omnibox"]
-      interval: 30s
-      timeout: 10s
+      interval: 5s
+      timeout: 3s
       retries: 5
 
   chromadb:
@@ -106,16 +104,9 @@ services:
       - "/etc/localtime:/etc/localtime:ro"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://127.0.0.1:8000/api/v1/heartbeat"]
-      interval: 30s
-      timeout: 10s
+      interval: 5s
+      timeout: 3s
       retries: 5
-
-  init:
-    image: alpine/curl:8.10.0
-    command: ['http://backend:8000/api/v1/namespaces', '-d', '{"name": "test"}', '-H', 'Content-Type: application/json']
-    depends_on:
-      backend:
-        condition: service_healthy
 
 volumes:
   chroma:
