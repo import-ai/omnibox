@@ -82,7 +82,7 @@ services:
     image: postgres:17-alpine
     restart: always
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - ${PWD}/data/postgres:/var/lib/postgresql/data
       - "/etc/localtime:/etc/localtime:ro"
     environment:
       POSTGRES_DB: ${OBB_DB_DATABASE:-omnibox}
@@ -100,14 +100,10 @@ services:
     environment:
       ANONYMIZED_TELEMETRY: FALSE
     volumes:
-      - chroma:/chroma/chroma
+      - ${PWD}/data/chroma:/chroma/chroma
       - "/etc/localtime:/etc/localtime:ro"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://127.0.0.1:8000/api/v1/heartbeat"]
       interval: 5s
       timeout: 3s
       retries: 5
-
-volumes:
-  chroma:
-  postgres:
