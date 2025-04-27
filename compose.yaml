@@ -23,9 +23,10 @@ services:
       OBB_WIZARD_BASE_URL: "http://wizard:8000"
     healthcheck:
       test: [ "CMD", "wget", "-q", "-O-", "http://127.0.0.1:${OBB_PORT:-8000}/api/v1/health" ]
-      interval: 5s
+      interval: 30s
       timeout: 3s
       retries: 5
+      start_period: 5s
     depends_on:
       wizard:
         condition: service_healthy
@@ -46,9 +47,10 @@ services:
       - .env
     healthcheck:
       test: ["CMD", "wget", "-q", "-O-", "http://127.0.0.1:8000/api/v1/health"]
-      interval: 5s
+      interval: 30s
       timeout: 3s
       retries: 5
+      start_period: 5s
     depends_on:
       chromadb:
         condition: service_healthy
@@ -69,9 +71,10 @@ services:
       - .env
     healthcheck:
       test: ["CMD-SHELL", "pgrep python"]
-      interval: 5s
+      interval: 30s
       timeout: 3s
       retries: 5
+      start_period: 5s
     depends_on:
       chromadb:
         condition: service_healthy
@@ -90,12 +93,13 @@ services:
       POSTGRES_PASSWORD: ${OBB_DB_PASSWORD:-omnibox}
     healthcheck:
       test: ["CMD", "pg_isready", "-q", "-d", "omnibox", "-U", "omnibox"]
-      interval: 5s
+      interval: 30s
       timeout: 3s
       retries: 5
+      start_period: 5s
 
   chromadb:
-    image: chromadb/chroma:0.5.23
+    image: chromadb/chroma:1.0.7
     restart: always
     environment:
       ANONYMIZED_TELEMETRY: FALSE
@@ -103,7 +107,8 @@ services:
       - ${PWD}/data/chroma:/chroma/chroma
       - "/etc/localtime:/etc/localtime:ro"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://127.0.0.1:8000/api/v1/heartbeat"]
-      interval: 5s
+      test: [ "CMD", "/bin/bash", "-c", "cat < /dev/null > /dev/tcp/localhost/8000" ]
+      interval: 30s
       timeout: 3s
       retries: 5
+      start_period: 5s
