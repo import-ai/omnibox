@@ -102,9 +102,9 @@ services:
     image: chromadb/chroma:1.0.7
     restart: always
     environment:
-      ANONYMIZED_TELEMETRY: FALSE
+      ANONYMIZED_TELEMETRY: False
     volumes:
-      - ${PWD}/data/chroma:/chroma/chroma
+      - ${PWD}/data/chroma:/data
       - "/etc/localtime:/etc/localtime:ro"
     healthcheck:
       test: [ "CMD", "/bin/bash", "-c", "cat < /dev/null > /dev/tcp/localhost/8000" ]
