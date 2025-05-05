@@ -85,8 +85,8 @@ services:
     image: postgres:17-alpine
     restart: always
     volumes:
-      - ${PWD}/data/postgres:/var/lib/postgresql/data
       - "/etc/localtime:/etc/localtime:ro"
+      - ${PWD}/data/postgres:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: ${OBB_DB_DATABASE:-omnibox}
       POSTGRES_USER: ${OBB_DB_USERNAME:-omnibox}
@@ -104,11 +104,27 @@ services:
     environment:
       ANONYMIZED_TELEMETRY: False
     volumes:
-      - ${PWD}/data/chroma:/data
       - "/etc/localtime:/etc/localtime:ro"
+      - ${PWD}/data/chroma:/data
     healthcheck:
       test: [ "CMD", "/bin/bash", "-c", "cat < /dev/null > /dev/tcp/localhost/8000" ]
       interval: 30s
       timeout: 3s
       retries: 5
       start_period: 5s
+
+  minio:
+    image: quay.io/minio/minio:RELEASE.2025-04-22T22-12-26Z
+    restart: always
+    command: 'server /data --console-address ":9001"'
+    environment:
+      MINIO_ROOT_USER: username
+      MINIO_ROOT_PASSWORD: password
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - '${PWD}/data/minio:/data'
+    healthcheck:
+      test: [ "CMD", "curl", "-I", "http://127.0.0.1:9000/minio/health/live" ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
