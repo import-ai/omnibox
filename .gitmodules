@@ -7,6 +7,3 @@
 [submodule "backend"]
 	path = backend
 	url = git@github.com:import-ai/omnibox-backend.git
-[submodule "client/chrome"]
-	path = client/chrome
-	url = git@github.com:import-ai/omnibox-client-chrome.git
