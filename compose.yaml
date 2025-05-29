@@ -25,6 +25,11 @@ services:
       OBB_JWT_EXPIRE: ${OBB_JWT_EXPIRE:-2678400s}
       OBB_MAIL_TRANSPORT: ${OBB_MAIL_TRANSPORT}
       OBB_MAIL_FROM: ${OBB_MAIL_FROM}
+      OBB_MEILI_HOST: ${OBB_MEILI_HOST}
+      OBB_MEILI_KEY: ${OBB_MEILI_KEY}
+      OBB_OPENAI_URL: ${OBB_OPENAI_URL}
+      OBB_OPENAI_KEY: ${OBB_OPENAI_KEY}
+      OBB_OPENAI_EMBEDDING_MODEL: ${OBB_OPENAI_EMBEDDING_MODEL}
     healthcheck:
       test: [ "CMD", "wget", "-q", "-O-", "http://127.0.0.1:${OBB_PORT:-8000}/api/v1/health" ]
       interval: 30s
@@ -146,3 +151,12 @@ services:
       interval: 5s
       timeout: 3s
       retries: 5
+
+  meilisearch:
+    image: getmeili/meilisearch
+    container_name: meilisearch
+    restart: always
+    environment:
+      - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
+    volumes:
+      - '${PWD}/data/meili_data:/meili_data'
