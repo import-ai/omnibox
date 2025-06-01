@@ -6,7 +6,7 @@ services:
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
     ports:
-      - 8080:80
+      - ${OB_WEB_PORT:-8080}:80
     restart: always
     depends_on:
       backend:
