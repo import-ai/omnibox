@@ -45,6 +45,8 @@ services:
         condition: service_healthy
       postgres:
         condition: service_healthy
+      meilisearch:
+        condition: service_healthy
 
   wizard:
     image: ghcr.io/import-ai/omnibox-wizard:main
@@ -163,3 +165,8 @@ services:
       MEILI_MASTER_KEY: ${OBB_MEILI_KEY}
     volumes:
       - '${PWD}/data/meili_data:/meili_data'
+    healthcheck:
+      test: [ "CMD", "curl", "-I", "http://127.0.0.1:7700/health" ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
