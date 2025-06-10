@@ -55,8 +55,8 @@ services:
       - "/etc/localtime:/etc/localtime:ro"
     environment:
       ENV: "prod"
-      OBW_VECTOR_HOST: chromadb
-      OBW_VECTOR_PORT: 8000
+      OBW_VECTOR_HOST: ${OBW_MEILI_HOST:-http://meilisearch:7700}
+      OBW_VECTOR_MEILI_API_KEY: ${OBB_MEILI_KEY}
       OBW_BACKEND_BASE_URL: "http://backend:8000"
 
       OBW_VECTOR_EMBEDDING_API_KEY: ${OBW_VECTOR_EMBEDDING_API_KEY}
@@ -85,8 +85,8 @@ services:
     restart: always
     environment:
       ENV: "prod"
-      OBW_VECTOR_HOST: chromadb
-      OBW_VECTOR_PORT: 8000
+      OBW_VECTOR_HOST: ${OBW_MEILI_HOST:-http://meilisearch:7700}
+      OBW_VECTOR_MEILI_API_KEY: ${OBB_MEILI_KEY}
       OBW_BACKEND_BASE_URL: "http://backend:8000"
 
       OBW_VECTOR_EMBEDDING_API_KEY: ${OBW_VECTOR_EMBEDDING_API_KEY}
