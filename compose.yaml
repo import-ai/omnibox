@@ -77,7 +77,7 @@ services:
       retries: 5
       start_period: 5s
     depends_on:
-      chromadb:
+      meilisearch:
         condition: service_healthy
 
   wizard-worker:
@@ -109,7 +109,7 @@ services:
       retries: 5
       start_period: 5s
     depends_on:
-      chromadb:
+      meilisearch:
         condition: service_healthy
       backend:
         condition: service_healthy
@@ -126,21 +126,6 @@ services:
       POSTGRES_PASSWORD: ${OBB_DB_PASSWORD:-omnibox}
     healthcheck:
       test: ["CMD", "pg_isready", "-q", "-d", "omnibox", "-U", "omnibox"]
-      interval: 30s
-      timeout: 3s
-      retries: 5
-      start_period: 5s
-
-  chromadb:
-    image: chromadb/chroma:1.0.7
-    restart: always
-    environment:
-      ANONYMIZED_TELEMETRY: False
-    volumes:
-      - "/etc/localtime:/etc/localtime:ro"
-      - ${PWD}/data/chroma:/data
-    healthcheck:
-      test: [ "CMD", "/bin/bash", "-c", "cat < /dev/null > /dev/tcp/localhost/8000" ]
       interval: 30s
       timeout: 3s
       retries: 5
