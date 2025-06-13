@@ -29,7 +29,7 @@ services:
       OBB_MAIL_FROM: ${OBB_MAIL_FROM}
 
       OBB_MEILI_HOST: ${OBB_MEILI_HOST:-http://meilisearch:7700}
-      OBB_MEILI_KEY: ${OBB_MEILI_KEY}
+      OBB_MEILI_KEY: ${GLOBAL_MEILI_KEY}
 
       OBB_OPENAI_URL: ${OBB_OPENAI_BASE_URL}
       OBB_OPENAI_KEY: ${OBB_OPENAI_API_KEY}
@@ -56,7 +56,7 @@ services:
     environment:
       ENV: "prod"
       OBW_VECTOR_HOST: ${OBW_MEILI_HOST:-http://meilisearch:7700}
-      OBW_VECTOR_MEILI_API_KEY: ${OBB_MEILI_KEY}
+      OBW_VECTOR_MEILI_API_KEY: ${GLOBAL_MEILI_KEY}
       OBW_BACKEND_BASE_URL: "http://backend:8000"
 
       OBW_VECTOR_EMBEDDING_API_KEY: ${OBW_VECTOR_EMBEDDING_API_KEY}
@@ -86,7 +86,7 @@ services:
     environment:
       ENV: "prod"
       OBW_VECTOR_HOST: ${OBW_MEILI_HOST:-http://meilisearch:7700}
-      OBW_VECTOR_MEILI_API_KEY: ${OBB_MEILI_KEY}
+      OBW_VECTOR_MEILI_API_KEY: ${GLOBAL_MEILI_KEY}
       OBW_BACKEND_BASE_URL: "http://backend:8000"
 
       OBW_VECTOR_EMBEDDING_API_KEY: ${OBW_VECTOR_EMBEDDING_API_KEY}
@@ -166,7 +166,7 @@ services:
     image: getmeili/meilisearch:v1.14
     restart: always
     environment:
-      MEILI_MASTER_KEY: ${OBB_MEILI_KEY}
+      MEILI_MASTER_KEY: ${GLOBAL_MEILI_KEY}
     volumes:
       - '${PWD}/data/meili_data:/meili_data'
     healthcheck:
