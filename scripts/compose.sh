@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 function compose() {
-    cd backend && docker compose -f base.yaml -f build.yaml "$@" && cd ../wizard && docker compose -f compose.yaml "$@"
+    grep -v 'PWD' compose.yaml > compose.tmp.yaml
+    docker compose -f compose.tmp.yaml -f compose.dev.yaml "$@"
 }
 
 compose "$@"

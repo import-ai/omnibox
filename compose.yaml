@@ -159,6 +159,7 @@ services:
     environment:
       MEILI_MASTER_KEY: ${GLOBAL_MEILI_KEY}
     volumes:
+      - "/etc/localtime:/etc/localtime:ro"
       - '${PWD}/data/meili_data:/meili_data'
     healthcheck:
       test: [ "CMD", "curl", "-I", "http://127.0.0.1:7700/health" ]
