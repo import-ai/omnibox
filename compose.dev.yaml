@@ -1,0 +1,45 @@
+services:
+  web:
+    build:
+      context: web
+
+  backend:
+    build:
+      context: backend
+    ports:
+      - "8000:${OBB_PORT:-8000}"
+
+  wizard:
+    build:
+      context: wizard
+    ports:
+      - "8001:8000"
+
+  wizard-worker:
+    build:
+      context: wizard
+
+  postgres:
+    ports:
+      - "5432:5432"
+
+  minio:
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+
+  meilisearch:
+    ports:
+      - "7700:7700"
+
+  init:
+    image: alpine/curl:8.10.0
+    command: 
+      - 'http://backend:${OBB_PORT:-8000}/internal/api/v1/sign-up'
+      - '-H'
+      - 'Content-Type: application/json'
+      - '-d'
+      - '{"username":"username","password":"Passw0rd","password_repeat":"Passw0rd","email":"omnibox@qq.com"}'
+    depends_on:
+      backend:
+        condition: service_healthy

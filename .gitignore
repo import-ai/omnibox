@@ -3,4 +3,5 @@
 .idea
 .DS_Store
 compose.override.yaml
+compose.tmp.yaml
 data
