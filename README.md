@@ -46,6 +46,13 @@ docker compose up -d
 | Namespace | `test` |
 | Space Type | `private` |
 
+## Developemnt
+
+| Script | Comment |
+| --- | --- |
+| `bash scripts/sync.sh` | Pull all submodule's main branch |
+| `bash scripts/compose.sh up -d --build` | Start a full featured local service without data persistence |
+
 ## Roadmap
 
 - **Mobile Support**: Post from iOS and Android devices.
