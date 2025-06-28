@@ -1,0 +1,5 @@
+services:
+  wizard:
+    depends_on:
+      meilisearch:
+        condition: service_healthy

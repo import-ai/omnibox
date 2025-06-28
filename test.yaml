@@ -1,0 +1,17 @@
+name: omnibox
+
+services:
+  web:
+    extends:
+      file: compose/compose.base.yaml
+      service: web
+
+  backend:
+    extends:
+      file: compose/compose.base.yaml
+      service: backend
+
+  wizard:
+    extends:
+      file: compose/compose.base.yaml
+      service: wizard

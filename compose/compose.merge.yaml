@@ -1,0 +1,28 @@
+include:
+  - compose.postgres.yaml
+  - compose.meilisearch.yaml
+  - compose.minio.yaml
+
+services:
+  web:
+    extends:
+      file: compose.base.yaml
+      service: web
+
+  backend:
+    extends:
+      file: compose.base.yaml
+      service: backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+
+  wizard:
+    extends:
+      file: compose.base.yaml
+      service: wizard
+    depends_on:
+      meilisearch:
+        condition: service_healthy

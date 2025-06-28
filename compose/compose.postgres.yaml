@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    restart: always
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - ${PWD}/data/postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${OBB_DB_DATABASE:-omnibox}
+      POSTGRES_USER: ${OBB_DB_USERNAME:-omnibox}
+      POSTGRES_PASSWORD: ${OBB_DB_PASSWORD:-omnibox}
+    healthcheck:
+      test: ["CMD", "pg_isready", "-q", "-d", "omnibox", "-U", "omnibox"]
+      interval: 30s
+      timeout: 3s
+      retries: 5
+      start_period: 5s

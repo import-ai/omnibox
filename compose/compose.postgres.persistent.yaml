@@ -1,0 +1,4 @@
+services:
+  postgres:
+    volumes:
+      - ${PWD}/data/postgres:/var/lib/postgresql/data

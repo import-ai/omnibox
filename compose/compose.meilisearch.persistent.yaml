@@ -1,0 +1,4 @@
+services:
+  meilisearch:
+    volumes:
+      - '${PWD}/data/meili_data:/meili_data'
