@@ -8,12 +8,16 @@ services:
       context: backend
     ports:
       - "8000:${OBB_PORT:-8000}"
+    environment:
+      OBB_DB_LOGGING: ${OBB_DB_LOGGING}
 
   wizard:
     build:
       context: wizard
     ports:
       - "8001:8000"
+    environment:
+      ENV: "dev"
 
   wizard-worker:
     build:
