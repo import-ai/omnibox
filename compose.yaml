@@ -20,7 +20,8 @@ services:
     environment:
       OBB_WIZARD_BASE_URL: "http://wizard:8000"
 
-      OBB_DB_SYNC: ${OBB_DB_SYNC:-true}
+      OBB_DB_SYNC: ${OBB_DB_SYNC}
+      OBB_DB_DATABASE: ${OBB_DB_DATABASE}
 
       OBB_JWT_SECRET: ${OBB_JWT_SECRET}
       OBB_JWT_EXPIRE: ${OBB_JWT_EXPIRE:-2678400s}
