@@ -121,6 +121,8 @@ services:
       OBW_TASK_ASR_API_KEY: ${OBW_TASK_ASR_API_KEY}
       OBW_TASK_ASR_BASE_URL: ${OBW_TASK_ASR_BASE_URL}
       OBW_TASK_ASR_MODEL: ${OBW_TASK_ASR_MODEL}
+
+      OBW_TASK_PDF_READER_BASE_URL: ${OBW_TASK_PDF_READER_BASE_URL}
     volumes:
       - '/etc/localtime:/etc/localtime:ro'
     entrypoint: ['python', 'main.py']
