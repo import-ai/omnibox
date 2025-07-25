@@ -2,7 +2,7 @@
 
 for dir in "web" "backend" "wizard"; do
     (
-        cd "$dir" && git checkout main && git pull origin main
+        cd "$dir" && git fetch --all && git checkout main && git pull origin main
     ) &
 done
 
