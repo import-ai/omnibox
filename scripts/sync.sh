@@ -7,7 +7,7 @@ for dir in "web" "backend" "wizard"; do
 done
 
 (
-    cd "client/browser-extension" && git checkout main && git pull origin main
+    cd "client/browser-extension" && git fetch --all && git checkout main && git pull origin main
 ) &
 
 wait
