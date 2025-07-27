@@ -1,17 +1,9 @@
 # OmniBox - 小黑
 
-<a href="https://github.com/import-ai/omnibox-web/releases">
-    <img src="https://img.shields.io/github/v/release/import-ai/omnibox-web?color=brightgreen&label=Web&sort=semver" alt="version">
-</a>
-<a href="https://github.com/import-ai/omnibox-backend/releases">
-    <img src="https://img.shields.io/github/v/release/import-ai/omnibox-backend?color=blue&label=Backend&sort=semver" alt="version">
-</a>
-<a href="https://github.com/import-ai/omnibox-wizard/releases">
-    <img src="https://img.shields.io/github/v/release/import-ai/omnibox-wizard?color=orange&label=Wizard&sort=semver" alt="version">
-</a>
-<a href="https://github.com/import-ai/omnibox-browser-extension/releases">
-    <img src="https://img.shields.io/github/v/release/import-ai/omnibox-browser-extension?color=yellow&label=Browser Extension&sort=semver" alt="version">
-</a>
+[![omnibox-web](https://img.shields.io/github/v/release/import-ai/omnibox-web?color=brightgreen&label=Web&sort=semver)](https://github.com/import-ai/omnibox-web/releases)
+[![omnibox-backend](https://img.shields.io/github/v/release/import-ai/omnibox-backend?color=blue&label=Backend&sort=semver)](https://github.com/import-ai/omnibox-backend/releases)
+[![omnibox-wizard](https://img.shields.io/github/v/release/import-ai/omnibox-wizard?color=orange&label=Wizard&sort=semver)](https://github.com/import-ai/omnibox-wizard/releases)
+[![omnibox-browser-extension](https://img.shields.io/github/v/release/import-ai/omnibox-browser-extension?color=yellow&label=Browser%20Extension&sort=semver)](https://github.com/import-ai/omnibox-browser-extension/releases)
 
 ## 简介
 
