@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
 function compose() {
-    grep -v 'PWD' depends.compose.yaml > compose.tmp.yaml
-    docker compose -f compose.yaml -f compose.tmp.yaml -f compose.dev.yaml "$@"
+    docker compose -f compose.yaml -f compose/deps.yaml "$@"
 }
 
 compose "$@"
