@@ -33,9 +33,7 @@ OmniBox (小黑) is a simple, cross-platform, all-in-one AI knowledge hub. All y
 </tr>
 <tr>
 <td rowspan="2">File Parsing</td>
-<td><audio src="assets/example.mp3" controls>
-  Your browser does not support the audio element.
-</audio></td>
+<td><a href="assets/example.mp3">example.mp3</a></td>
 <td><img src="assets/screenshots/uploads/SCR-20250727-uakj.png"></td>
 </tr>
 <tr>

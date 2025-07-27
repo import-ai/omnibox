@@ -35,9 +35,7 @@ OmniBox（小黑）是一个简单、跨平台 All in One 的 AI 知识中枢，
 </tr>
 <tr>
 <td rowspan="2">文件解析</td>
-<td><audio src="assets/example.mp3" controls>
-  Your browser does not support the audio element.
-</audio></td>
+<td><a href="assets/example.mp3">example.mp3</a></td>
 <td><img src="assets/screenshots/uploads/SCR-20250727-uakj.png"></td>
 </tr>
 <tr>
