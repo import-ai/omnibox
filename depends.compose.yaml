@@ -1,4 +1,23 @@
 services:
+  backend:
+    depends_on:
+      postgres:
+        condition: service_healthy
+      meilisearch:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+
+  wizard:
+    depends_on:
+      meilisearch:
+        condition: service_healthy
+
+  wizard-worker:
+    depends_on:
+      meilisearch:
+        condition: service_healthy
+
   postgres:
     image: postgres:17-alpine
     restart: always
