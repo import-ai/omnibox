@@ -95,7 +95,7 @@ cp example.env .env
 bash scripts/dev.yaml up -d --build
 ```
 
-## Iteration Plan
+## TODO
 
 1. RSS subscription
 2. Agent, folder, and document public sharing
