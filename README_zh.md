@@ -5,6 +5,8 @@
 [![omnibox-wizard](https://img.shields.io/github/v/release/import-ai/omnibox-wizard?color=orange&label=Wizard&sort=semver)](https://github.com/import-ai/omnibox-wizard/releases)
 [![omnibox-browser-extension](https://img.shields.io/github/v/release/import-ai/omnibox-browser-extension?color=yellow&label=Browser%20Extension&sort=semver)](https://github.com/import-ai/omnibox-browser-extension/releases)
 
+[English](./README.md) | 简体中文
+
 ## 简介
 
 > “小黑”取自《爱情公寓》中的“楼下小黑”
