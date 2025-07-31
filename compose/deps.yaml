@@ -19,15 +19,15 @@ services:
         condition: service_healthy
 
   postgres:
-    image: postgres:17-alpine
+    image: postgres:17.5
     restart: always
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
       - ${PWD}/data/postgres:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: ${OBB_DB_DATABASE:-omnibox}
-      POSTGRES_USER: ${OBB_DB_USERNAME:-omnibox}
-      POSTGRES_PASSWORD: ${OBB_DB_PASSWORD:-omnibox}
+      POSTGRES_DB: omnibox
+      POSTGRES_USER: omnibox
+      POSTGRES_PASSWORD: omnibox
     healthcheck:
       test: ["CMD", "pg_isready", "-q", "-d", "omnibox", "-U", "omnibox"]
       interval: 30s
@@ -36,7 +36,7 @@ services:
       start_period: 5s
 
   minio:
-    image: quay.io/minio/minio:RELEASE.2025-04-22T22-12-26Z
+    image: minio/minio:RELEASE.2025-04-22T22-12-26Z
     restart: always
     command: 'server /data --console-address ":9001"'
     environment:

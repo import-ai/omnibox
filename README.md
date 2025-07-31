@@ -5,6 +5,8 @@
 [![omnibox-wizard](https://img.shields.io/github/v/release/import-ai/omnibox-wizard?color=orange&label=Wizard&sort=semver)](https://github.com/import-ai/omnibox-wizard/releases)
 [![omnibox-browser-extension](https://img.shields.io/github/v/release/import-ai/omnibox-browser-extension?color=yellow&label=Browser%20Extension&sort=semver)](https://github.com/import-ai/omnibox-browser-extension/releases)
 
+English | [简体中文](./README_zh.md)
+
 ## Introduction
 
 OmniBox (小黑) is a simple, cross-platform, all-in-one AI knowledge hub. All you need to do is collect, then ask.
@@ -80,10 +82,10 @@ Welcome to our online service: [omnibox.pro](https://www.omnibox.pro), supportin
 ### Deployment
 
 ```shell
-git clone https://github.com/import-ai/omnibox.git
+GIT_LFS_SKIP_SMUDGE=1 git clone https://github.com/import-ai/omnibox.git
 cd omnibox
 cp example.env .env
-bash scripts/compose.yaml up -d
+bash scripts/compose.sh up -d
 ```
 
 ### Local Development
@@ -92,7 +94,7 @@ bash scripts/compose.yaml up -d
 git clone --recurse-submodules https://github.com/import-ai/omnibox.git
 cd omnibox
 cp example.env .env
-bash scripts/dev.yaml up -d --build
+bash scripts/dev.sh up -d --build
 ```
 
 ## TODO
