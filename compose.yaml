@@ -18,7 +18,9 @@ services:
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
     environment:
-      OBB_WIZARD_BASE_URL: "http://wizard:8000"
+      OBB_LOG_LEVELS: ${OBB_LOG_LEVELS:-error,warn,log}
+
+      OBB_WIZARD_BASE_URL: ${OBB_WIZARD_BASE_URL:-http://wizard:8000}
 
       OBB_POSTGRES_URL: ${OBB_POSTGRES_URL:-postgres://omnibox:omnibox@postgres:5432/omnibox}
       OBB_MINIO_URL: ${OBB_MINIO_URL:-http://username:password@minio:9000/omnibox}

@@ -50,6 +50,8 @@ def main():
             print(f"Variables only in {sys.argv[1]}:")
             for var in first_only:
                 print(var)
+        if first_only and second_only:
+            print()
         if second_only:
             print(f"Variables only in {sys.argv[2]}:")
             for var in second_only:
