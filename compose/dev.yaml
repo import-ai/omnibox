@@ -1,15 +1,18 @@
 services:
   web:
+    image: ghcr.io/import-ai/omnibox-web:main
     build:
       context: web
 
   backend:
+    image: ghcr.io/import-ai/omnibox-backend:main
     build:
       context: backend
     ports:
       - "8000:8000"
 
   wizard:
+    image: ghcr.io/import-ai/omnibox-wizard:main
     build:
       context: wizard
     ports:
@@ -18,6 +21,7 @@ services:
       ENV: "dev"
 
   wizard-worker:
+    image: ghcr.io/import-ai/omnibox-wizard:main
     build:
       context: wizard
 

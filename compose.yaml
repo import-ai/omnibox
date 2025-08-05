@@ -2,7 +2,7 @@ name: omnibox
 
 services:
   web:
-    image: ghcr.io/import-ai/omnibox-web:main
+    image: ghcr.io/import-ai/omnibox-web:0.1.1
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
     ports:
@@ -13,12 +13,14 @@ services:
         condition: service_healthy
 
   backend:
-    image: ghcr.io/import-ai/omnibox-backend:main
+    image: ghcr.io/import-ai/omnibox-backend:0.1.1
     restart: always
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
     environment:
-      OBB_WIZARD_BASE_URL: "http://wizard:8000"
+      OBB_LOG_LEVELS: ${OBB_LOG_LEVELS:-error,warn,log}
+
+      OBB_WIZARD_BASE_URL: ${OBB_WIZARD_BASE_URL:-http://wizard:8000}
 
       OBB_POSTGRES_URL: ${OBB_POSTGRES_URL:-postgres://omnibox:omnibox@postgres:5432/omnibox}
       OBB_MINIO_URL: ${OBB_MINIO_URL:-http://username:password@minio:9000/omnibox}
@@ -45,7 +47,7 @@ services:
         condition: service_healthy
 
   wizard:
-    image: ghcr.io/import-ai/omnibox-wizard:main
+    image: ghcr.io/import-ai/omnibox-wizard:0.1.1
     restart: always
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
@@ -64,6 +66,7 @@ services:
       OBW_GRIMOIRE_OPENAI_DEFAULT_MODEL: ${OBW_GRIMOIRE_OPENAI_DEFAULT_MODEL}
       OBW_GRIMOIRE_OPENAI_MINI_MODEL: ${OBW_GRIMOIRE_OPENAI_MINI_MODEL}
       OBW_GRIMOIRE_OPENAI_LARGE_MODEL: ${OBW_GRIMOIRE_OPENAI_LARGE_MODEL}
+      OBW_GRIMOIRE_OPENAI_LARGE_THINKING_MODEL: ${OBW_GRIMOIRE_OPENAI_LARGE_THINKING_MODEL}
 
       OBW_TOOLS_SEARXNG_BASE_URL: ${OBW_TOOLS_SEARXNG_BASE_URL}
       OBW_TOOLS_SEARXNG_ENGINES: ${OBW_TOOLS_SEARXNG_ENGINES}
@@ -81,7 +84,7 @@ services:
       start_period: 5s
 
   wizard-worker:
-    image: ghcr.io/import-ai/omnibox-wizard:main
+    image: ghcr.io/import-ai/omnibox-wizard:0.1.1
     restart: always
     environment:
       ENV: "prod"
