@@ -2,7 +2,7 @@ name: omnibox
 
 services:
   web:
-    image: ghcr.io/import-ai/omnibox-web:main
+    image: ghcr.io/import-ai/omnibox-web:0.1.1
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
     ports:
@@ -13,7 +13,7 @@ services:
         condition: service_healthy
 
   backend:
-    image: ghcr.io/import-ai/omnibox-backend:main
+    image: ghcr.io/import-ai/omnibox-backend:0.1.1
     restart: always
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
@@ -47,7 +47,7 @@ services:
         condition: service_healthy
 
   wizard:
-    image: ghcr.io/import-ai/omnibox-wizard:main
+    image: ghcr.io/import-ai/omnibox-wizard:0.1.1
     restart: always
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
@@ -84,7 +84,7 @@ services:
       start_period: 5s
 
   wizard-worker:
-    image: ghcr.io/import-ai/omnibox-wizard:main
+    image: ghcr.io/import-ai/omnibox-wizard:0.1.1
     restart: always
     environment:
       ENV: "prod"
