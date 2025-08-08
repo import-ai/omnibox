@@ -4,7 +4,7 @@ services:
   web:
     image: ghcr.io/import-ai/omnibox-web:main
     volumes:
-      - "/etc/localtime:/etc/localtime:ro"
+      - '/etc/localtime:/etc/localtime:ro'
     ports:
       - ${OB_WEB_PORT:-8080}:80
     restart: always
@@ -16,9 +16,9 @@ services:
     image: ghcr.io/import-ai/omnibox-backend:main
     restart: always
     volumes:
-      - "/etc/localtime:/etc/localtime:ro"
+      - '/etc/localtime:/etc/localtime:ro'
     environment:
-      OBB_WIZARD_BASE_URL: "http://wizard:8000"
+      OBB_WIZARD_BASE_URL: 'http://wizard:8000'
 
       OBB_DB_SYNC: ${OBB_DB_SYNC}
       OBB_DB_DATABASE: ${OBB_DB_DATABASE}
@@ -41,8 +41,19 @@ services:
       OBB_OPEN_WECHAT_APP_ID: ${OBB_OPEN_WECHAT_APP_ID}
       OBB_OPEN_WECHAT_APP_SECRET: ${OBB_OPEN_WECHAT_APP_SECRET}
       OBB_WECHAT_REDIRECT_URI: ${OBB_WECHAT_REDIRECT_URI}
+
+      OBB_GOOGLE_CLIENT_ID: ${OBB_GOOGLE_CLIENT_ID}
+      OBB_GOOGLE_CLIENT_SECRET: ${OBB_GOOGLE_CLIENT_SECRET}
+      OBB_GOOGLE_REDIRECT_URI: ${OBB_GOOGLE_REDIRECT_URI}
     healthcheck:
-      test: [ "CMD", "wget", "-q", "-O-", "http://127.0.0.1:${OBB_PORT:-8000}/api/v1/health" ]
+      test:
+        [
+          'CMD',
+          'wget',
+          '-q',
+          '-O-',
+          'http://127.0.0.1:${OBB_PORT:-8000}/api/v1/health',
+        ]
       interval: 30s
       timeout: 3s
       retries: 5
@@ -59,12 +70,12 @@ services:
     image: ghcr.io/import-ai/omnibox-wizard:main
     restart: always
     volumes:
-      - "/etc/localtime:/etc/localtime:ro"
+      - '/etc/localtime:/etc/localtime:ro'
     environment:
-      ENV: "prod"
+      ENV: 'prod'
       OBW_VECTOR_HOST: ${OBW_MEILI_HOST:-http://meilisearch:7700}
       OBW_VECTOR_MEILI_API_KEY: ${GLOBAL_MEILI_KEY}
-      OBW_BACKEND_BASE_URL: "http://backend:8000"
+      OBW_BACKEND_BASE_URL: 'http://backend:8000'
 
       OBW_VECTOR_EMBEDDING_API_KEY: ${OBW_VECTOR_EMBEDDING_API_KEY}
       OBW_VECTOR_EMBEDDING_BASE_URL: ${OBW_VECTOR_EMBEDDING_BASE_URL}
@@ -86,7 +97,7 @@ services:
       OBW_TOOLS_RERANKER_THRESHOLD: ${OBW_TOOLS_RERANKER_THRESHOLD}
       OBW_TOOLS_RERANKER_K: ${OBW_TOOLS_RERANKER_K}
     healthcheck:
-      test: ["CMD", "wget", "-q", "-O-", "http://127.0.0.1:8000/api/v1/health"]
+      test: ['CMD', 'wget', '-q', '-O-', 'http://127.0.0.1:8000/api/v1/health']
       interval: 30s
       timeout: 3s
       retries: 5
@@ -99,10 +110,10 @@ services:
     image: ghcr.io/import-ai/omnibox-wizard:main
     restart: always
     environment:
-      ENV: "prod"
+      ENV: 'prod'
       OBW_VECTOR_HOST: ${OBW_MEILI_HOST:-http://meilisearch:7700}
       OBW_VECTOR_MEILI_API_KEY: ${GLOBAL_MEILI_KEY}
-      OBW_BACKEND_BASE_URL: "http://backend:8000"
+      OBW_BACKEND_BASE_URL: 'http://backend:8000'
 
       OBW_VECTOR_EMBEDDING_API_KEY: ${OBW_VECTOR_EMBEDDING_API_KEY}
       OBW_VECTOR_EMBEDDING_BASE_URL: ${OBW_VECTOR_EMBEDDING_BASE_URL}
@@ -115,11 +126,11 @@ services:
       OBW_TASK_ASR_MODEL: ${OBW_TASK_ASR_MODEL}
       OBW_TASK_PDF_READER_BASE_URL: ${OBW_TASK_PDF_READER_BASE_URL}
     volumes:
-      - "/etc/localtime:/etc/localtime:ro"
-    entrypoint: ["python", "main.py"]
-    command: ["--workers", "1"]
+      - '/etc/localtime:/etc/localtime:ro'
+    entrypoint: ['python', 'main.py']
+    command: ['--workers', '1']
     healthcheck:
-      test: ["CMD-SHELL", "pgrep python"]
+      test: ['CMD-SHELL', 'pgrep python']
       interval: 30s
       timeout: 3s
       retries: 5
@@ -134,14 +145,14 @@ services:
     image: postgres:17-alpine
     restart: always
     volumes:
-      - "/etc/localtime:/etc/localtime:ro"
+      - '/etc/localtime:/etc/localtime:ro'
       - ${PWD}/data/postgres:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: ${OBB_DB_DATABASE:-omnibox}
       POSTGRES_USER: ${OBB_DB_USERNAME:-omnibox}
       POSTGRES_PASSWORD: ${OBB_DB_PASSWORD:-omnibox}
     healthcheck:
-      test: ["CMD", "pg_isready", "-q", "-d", "omnibox", "-U", "omnibox"]
+      test: ['CMD', 'pg_isready', '-q', '-d', 'omnibox', '-U', 'omnibox']
       interval: 30s
       timeout: 3s
       retries: 5
@@ -155,10 +166,10 @@ services:
       MINIO_ROOT_USER: username
       MINIO_ROOT_PASSWORD: password
     volumes:
-      - "/etc/localtime:/etc/localtime:ro"
+      - '/etc/localtime:/etc/localtime:ro'
       - '${PWD}/data/minio:/data'
     healthcheck:
-      test: [ "CMD", "curl", "-I", "http://127.0.0.1:9000/minio/health/live" ]
+      test: ['CMD', 'curl', '-I', 'http://127.0.0.1:9000/minio/health/live']
       interval: 5s
       timeout: 3s
       retries: 5
@@ -169,10 +180,10 @@ services:
     environment:
       MEILI_MASTER_KEY: ${GLOBAL_MEILI_KEY}
     volumes:
-      - "/etc/localtime:/etc/localtime:ro"
+      - '/etc/localtime:/etc/localtime:ro'
       - '${PWD}/data/meili_data:/meili_data'
     healthcheck:
-      test: [ "CMD", "curl", "-I", "http://127.0.0.1:7700/health" ]
+      test: ['CMD', 'curl', '-I', 'http://127.0.0.1:7700/health']
       interval: 5s
       timeout: 3s
       retries: 5
