@@ -2,7 +2,7 @@ name: omnibox
 
 services:
   web:
-    image: ghcr.io/import-ai/omnibox-web:main
+    image: ghcr.io/import-ai/omnibox-web:0.1.1
     volumes:
       - '/etc/localtime:/etc/localtime:ro'
     ports:
@@ -13,28 +13,23 @@ services:
         condition: service_healthy
 
   backend:
-    image: ghcr.io/import-ai/omnibox-backend:main
+    image: ghcr.io/import-ai/omnibox-backend:0.1.1
     restart: always
     volumes:
       - '/etc/localtime:/etc/localtime:ro'
     environment:
-      OBB_WIZARD_BASE_URL: 'http://wizard:8000'
+      OBB_LOG_LEVELS: ${OBB_LOG_LEVELS:-error,warn,log}
 
-      OBB_DB_SYNC: ${OBB_DB_SYNC}
-      OBB_DB_DATABASE: ${OBB_DB_DATABASE}
+      OBB_WIZARD_BASE_URL: ${OBB_WIZARD_BASE_URL:-http://wizard:8000}
+
+      OBB_POSTGRES_URL: ${OBB_POSTGRES_URL:-postgres://omnibox:omnibox@postgres:5432/omnibox}
+      OBB_MINIO_URL: ${OBB_MINIO_URL:-http://username:password@minio:9000/omnibox}
 
       OBB_JWT_SECRET: ${OBB_JWT_SECRET}
       OBB_JWT_EXPIRE: ${OBB_JWT_EXPIRE:-2678400s}
 
       OBB_MAIL_TRANSPORT: ${OBB_MAIL_TRANSPORT}
       OBB_MAIL_FROM: ${OBB_MAIL_FROM}
-
-      OBB_MEILI_HOST: ${OBB_MEILI_HOST:-http://meilisearch:7700}
-      OBB_MEILI_KEY: ${GLOBAL_MEILI_KEY}
-
-      OBB_OPENAI_URL: ${OBB_OPENAI_BASE_URL}
-      OBB_OPENAI_KEY: ${OBB_OPENAI_API_KEY}
-      OBB_OPENAI_EMBEDDING_MODEL: ${OBB_OPENAI_EMBEDDING_MODEL}
 
       OBB_WECHAT_APP_ID: ${OBB_WECHAT_APP_ID}
       OBB_WECHAT_APP_SECRET: ${OBB_WECHAT_APP_SECRET}
@@ -46,14 +41,7 @@ services:
       OBB_GOOGLE_CLIENT_SECRET: ${OBB_GOOGLE_CLIENT_SECRET}
       OBB_GOOGLE_REDIRECT_URI: ${OBB_GOOGLE_REDIRECT_URI}
     healthcheck:
-      test:
-        [
-          'CMD',
-          'wget',
-          '-q',
-          '-O-',
-          'http://127.0.0.1:${OBB_PORT:-8000}/api/v1/health',
-        ]
+      test: ['CMD', 'wget', '-q', '-O-', 'http://127.0.0.1:8000/api/v1/health']
       interval: 30s
       timeout: 3s
       retries: 5
@@ -61,32 +49,28 @@ services:
     depends_on:
       wizard:
         condition: service_healthy
-      postgres:
-        condition: service_healthy
-      meilisearch:
-        condition: service_healthy
 
   wizard:
-    image: ghcr.io/import-ai/omnibox-wizard:main
+    image: ghcr.io/import-ai/omnibox-wizard:0.1.1
     restart: always
     volumes:
       - '/etc/localtime:/etc/localtime:ro'
     environment:
       ENV: 'prod'
       OBW_VECTOR_HOST: ${OBW_MEILI_HOST:-http://meilisearch:7700}
-      OBW_VECTOR_MEILI_API_KEY: ${GLOBAL_MEILI_KEY}
+      OBW_VECTOR_MEILI_API_KEY: ${GLOBAL_MEILI_KEY:-meili_master_key}
       OBW_BACKEND_BASE_URL: 'http://backend:8000'
 
       OBW_VECTOR_EMBEDDING_API_KEY: ${OBW_VECTOR_EMBEDDING_API_KEY}
       OBW_VECTOR_EMBEDDING_BASE_URL: ${OBW_VECTOR_EMBEDDING_BASE_URL}
       OBW_VECTOR_EMBEDDING_MODEL: ${OBW_VECTOR_EMBEDDING_MODEL}
 
-      OBW_GRIMOIRE_CUSTOM_TOOL_CALL: ${OBW_GRIMOIRE_CUSTOM_TOOL_CALL}
       OBW_GRIMOIRE_OPENAI_DEFAULT_API_KEY: ${OBW_GRIMOIRE_OPENAI_DEFAULT_API_KEY}
       OBW_GRIMOIRE_OPENAI_DEFAULT_BASE_URL: ${OBW_GRIMOIRE_OPENAI_DEFAULT_BASE_URL}
       OBW_GRIMOIRE_OPENAI_DEFAULT_MODEL: ${OBW_GRIMOIRE_OPENAI_DEFAULT_MODEL}
       OBW_GRIMOIRE_OPENAI_MINI_MODEL: ${OBW_GRIMOIRE_OPENAI_MINI_MODEL}
       OBW_GRIMOIRE_OPENAI_LARGE_MODEL: ${OBW_GRIMOIRE_OPENAI_LARGE_MODEL}
+      OBW_GRIMOIRE_OPENAI_LARGE_THINKING_MODEL: ${OBW_GRIMOIRE_OPENAI_LARGE_THINKING_MODEL}
 
       OBW_TOOLS_SEARXNG_BASE_URL: ${OBW_TOOLS_SEARXNG_BASE_URL}
       OBW_TOOLS_SEARXNG_ENGINES: ${OBW_TOOLS_SEARXNG_ENGINES}
@@ -102,17 +86,14 @@ services:
       timeout: 3s
       retries: 5
       start_period: 5s
-    depends_on:
-      meilisearch:
-        condition: service_healthy
 
   wizard-worker:
-    image: ghcr.io/import-ai/omnibox-wizard:main
+    image: ghcr.io/import-ai/omnibox-wizard:0.1.1
     restart: always
     environment:
       ENV: 'prod'
       OBW_VECTOR_HOST: ${OBW_MEILI_HOST:-http://meilisearch:7700}
-      OBW_VECTOR_MEILI_API_KEY: ${GLOBAL_MEILI_KEY}
+      OBW_VECTOR_MEILI_API_KEY: ${GLOBAL_MEILI_KEY:-meili_master_key}
       OBW_BACKEND_BASE_URL: 'http://backend:8000'
 
       OBW_VECTOR_EMBEDDING_API_KEY: ${OBW_VECTOR_EMBEDDING_API_KEY}
@@ -136,54 +117,5 @@ services:
       retries: 5
       start_period: 5s
     depends_on:
-      meilisearch:
-        condition: service_healthy
       backend:
         condition: service_healthy
-
-  postgres:
-    image: postgres:17-alpine
-    restart: always
-    volumes:
-      - '/etc/localtime:/etc/localtime:ro'
-      - ${PWD}/data/postgres:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: ${OBB_DB_DATABASE:-omnibox}
-      POSTGRES_USER: ${OBB_DB_USERNAME:-omnibox}
-      POSTGRES_PASSWORD: ${OBB_DB_PASSWORD:-omnibox}
-    healthcheck:
-      test: ['CMD', 'pg_isready', '-q', '-d', 'omnibox', '-U', 'omnibox']
-      interval: 30s
-      timeout: 3s
-      retries: 5
-      start_period: 5s
-
-  minio:
-    image: quay.io/minio/minio:RELEASE.2025-04-22T22-12-26Z
-    restart: always
-    command: 'server /data --console-address ":9001"'
-    environment:
-      MINIO_ROOT_USER: username
-      MINIO_ROOT_PASSWORD: password
-    volumes:
-      - '/etc/localtime:/etc/localtime:ro'
-      - '${PWD}/data/minio:/data'
-    healthcheck:
-      test: ['CMD', 'curl', '-I', 'http://127.0.0.1:9000/minio/health/live']
-      interval: 5s
-      timeout: 3s
-      retries: 5
-
-  meilisearch:
-    image: getmeili/meilisearch:v1.14
-    restart: always
-    environment:
-      MEILI_MASTER_KEY: ${GLOBAL_MEILI_KEY}
-    volumes:
-      - '/etc/localtime:/etc/localtime:ro'
-      - '${PWD}/data/meili_data:/meili_data'
-    healthcheck:
-      test: ['CMD', 'curl', '-I', 'http://127.0.0.1:7700/health']
-      interval: 5s
-      timeout: 3s
-      retries: 5

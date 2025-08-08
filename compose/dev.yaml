@@ -1,17 +1,18 @@
 services:
   web:
+    image: ghcr.io/import-ai/omnibox-web:main
     build:
       context: web
 
   backend:
+    image: ghcr.io/import-ai/omnibox-backend:main
     build:
       context: backend
     ports:
-      - "8000:${OBB_PORT:-8000}"
-    environment:
-      OBB_DB_LOGGING: ${OBB_DB_LOGGING}
+      - "8000:8000"
 
   wizard:
+    image: ghcr.io/import-ai/omnibox-wizard:main
     build:
       context: wizard
     ports:
@@ -20,6 +21,7 @@ services:
       ENV: "dev"
 
   wizard-worker:
+    image: ghcr.io/import-ai/omnibox-wizard:main
     build:
       context: wizard
 
@@ -39,7 +41,7 @@ services:
   init:
     image: alpine/curl:8.10.0
     command: 
-      - 'http://backend.:${OBB_PORT:-8000}/internal/api/v1/sign-up'
+      - 'http://backend.:8000/internal/api/v1/sign-up'
       - '-H'
       - 'Content-Type: application/json'
       - '-d'

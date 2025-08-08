@@ -5,36 +5,38 @@
 [![omnibox-wizard](https://img.shields.io/github/v/release/import-ai/omnibox-wizard?color=orange&label=Wizard&sort=semver)](https://github.com/import-ai/omnibox-wizard/releases)
 [![omnibox-browser-extension](https://img.shields.io/github/v/release/import-ai/omnibox-browser-extension?color=yellow&label=Browser%20Extension&sort=semver)](https://github.com/import-ai/omnibox-browser-extension/releases)
 
-English | [简体中文](./README_zh.md)
+[English](./README.md) | 简体中文
 
-## Introduction
+## 简介
 
-OmniBox (小黑) is a simple, cross-platform, all-in-one AI knowledge hub. All you need to do is collect, then ask.
+> “小黑”取自《爱情公寓》中的“楼下小黑”
 
-### Core Features
+OmniBox（小黑）是一个简单、跨平台 All in One 的 AI 知识中枢，你需要做的只有收集，然后提问。
 
-1. Save the main content of a webpage to OmniBox via the browser extension.
-2. Upload and end-to-end parsing & indexing for files in formats like PDF, Word, PPT, MP3, etc.
-3. Markdown editing and rendering (formulas, mind maps, flowcharts, sequence diagrams, Gantt charts, music notation, etc.)
-4. Q&A and writing based on both Internet and local databases.
-5. User and team system, permissions, sharing management, multi-tenancy, multi-language, dark mode, mobile responsiveness, and more.
+### 核心特性
 
-### Screenshots
+1. 通过浏览器插件将网页正文保存至小黑
+2. PDF、Word、PPT、MP3 等格式的文件上传与端到端解析、索引
+3. Markdown 编辑、渲染（公式、脑图、流程图、时序图、甘特图、五线谱等）
+4. 基于互联网和本地的数据库进行问答、写作
+5. 用户、团队系统、权限、分享管理、多租户、多语言、暗色模式、移动端自适应等
+
+### 截图
 
 <details>
 <table>
 <tr>
-<th>Feature</th>
-<th>Source</th>
-<th>Parsing Result</th>
+<th>功能</th>
+<th>源</th>
+<th>解析结果</th>
 </tr>
 <tr>
-<td>Save Webpage to OmniBox</td>
+<td>收藏网页</td>
 <td><img src="assets/screenshots/extension/SCR-20250727-uniy.png" alt="Source web"></td>
 <td><img src="assets/screenshots/extension/SCR-20250727-srzd.png" alt="Extension parsing result"></td>
 </tr>
 <tr>
-<td rowspan="2">File Parsing</td>
+<td rowspan="2">文件解析</td>
 <td><a href="assets/example.mp3">example.mp3</a></td>
 <td><img src="assets/screenshots/uploads/SCR-20250727-uakj.png"></td>
 </tr>
@@ -47,15 +49,15 @@ OmniBox (小黑) is a simple, cross-platform, all-in-one AI knowledge hub. All y
 
 <table>
 <tr>
-<th>Feature</th>
-<th>Screenshot</th>
+<th>功能</th>
+<th>截图</th>
 </tr>
 <tr>
-<td>Q&A</td>
+<td>问答</td>
 <td><img src="assets/screenshots/chat/SCR-20250727-uder.png"></td>
 </tr>
 <tr>
-<td>Writing</td>
+<td>写作</td>
 <td><img src="assets/screenshots/chat/SCR-20250727-udta.png">
 <img src="assets/screenshots/chat/SCR-20250727-uegk.png"></td>
 </tr>
@@ -69,38 +71,38 @@ OmniBox (小黑) is a simple, cross-platform, all-in-one AI knowledge hub. All y
 </table>
 </details>
 
-## Quick Start
+## 快速开始
 
-Welcome to our online service: [omnibox.pro](https://www.omnibox.pro), supporting email registration and WeChat login.
+欢迎使用我们的在线服务：[omnibox.pro](https://www.omnibox.pro)，支持邮箱注册以及微信登录。
 
-### Browser Extension
+### 浏览器插件
 
 [![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/gckiocdfdaofgabchobljcdimjieookl?label=Google%20Chrome&color=yellow)](https://chromewebstore.google.com/detail/save-to-omnibox/gckiocdfdaofgabchobljcdimjieookl)
 [![Mozilla Add-on Version](https://img.shields.io/amo/v/save-to-omnibox?label=Mozilla%20Firefox&color=%23f72f54)
 ](https://addons.mozilla.org/en-US/firefox/addon/save-to-omnibox/)
 
-### Deployment
+### 部署
 
 ```shell
-GIT_LFS_SKIP_SMUDGE=1 git clone https://github.com/import-ai/omnibox.git
+git clone https://github.com/import-ai/omnibox.git
 cd omnibox
 cp example.env .env
-bash scripts/compose.sh up -d
+bash scripts/compose.yaml up -d
 ```
 
-### Local Development
+### 本地开发
 
 ```shell
 git clone --recurse-submodules https://github.com/import-ai/omnibox.git
 cd omnibox
 cp example.env .env
-bash scripts/dev.sh up -d --build
+bash scripts/dev.yaml up -d --build
 ```
 
-## TODO
+## 迭代计划
 
-1. RSS subscription
-2. Agent, folder, and document public sharing
-3. WeChat Mini Program
-4. Increase writing length limit (currently can write up to 5000 words)
+1. RSS 订阅
+2. Agent、文件夹、文档公开分享
+3. 微信小程序
+4. 提升写作的长度上限（目前最多能写 5000 字）
 5. API

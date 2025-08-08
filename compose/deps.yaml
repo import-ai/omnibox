@@ -1,0 +1,66 @@
+services:
+  backend:
+    depends_on:
+      postgres:
+        condition: service_healthy
+      meilisearch:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+
+  wizard:
+    depends_on:
+      meilisearch:
+        condition: service_healthy
+
+  wizard-worker:
+    depends_on:
+      meilisearch:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:17.5
+    restart: always
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - ${PWD}/data/postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: omnibox
+      POSTGRES_USER: omnibox
+      POSTGRES_PASSWORD: omnibox
+    healthcheck:
+      test: ["CMD", "pg_isready", "-q", "-d", "omnibox", "-U", "omnibox"]
+      interval: 30s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+
+  minio:
+    image: minio/minio:RELEASE.2025-04-22T22-12-26Z
+    restart: always
+    command: 'server /data --console-address ":9001"'
+    environment:
+      MINIO_ROOT_USER: username
+      MINIO_ROOT_PASSWORD: password
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - '${PWD}/data/minio:/data'
+    healthcheck:
+      test: [ "CMD", "curl", "-I", "http://127.0.0.1:9000/minio/health/live" ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.14
+    restart: always
+    environment:
+      MEILI_MASTER_KEY: ${GLOBAL_MEILI_KEY}
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - '${PWD}/data/meili_data:/meili_data'
+    healthcheck:
+      test: [ "CMD", "curl", "-I", "http://127.0.0.1:7700/health" ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
