@@ -4,7 +4,7 @@ services:
   web:
     image: ghcr.io/import-ai/omnibox-web:0.1.1
     volumes:
-      - "/etc/localtime:/etc/localtime:ro"
+      - '/etc/localtime:/etc/localtime:ro'
     ports:
       - ${OB_WEB_PORT:-8080}:80
     restart: always
@@ -16,7 +16,7 @@ services:
     image: ghcr.io/import-ai/omnibox-backend:0.1.1
     restart: always
     volumes:
-      - "/etc/localtime:/etc/localtime:ro"
+      - '/etc/localtime:/etc/localtime:ro'
     environment:
       OBB_LOG_LEVELS: ${OBB_LOG_LEVELS:-error,warn,log}
 
@@ -36,8 +36,12 @@ services:
       OBB_OPEN_WECHAT_APP_ID: ${OBB_OPEN_WECHAT_APP_ID}
       OBB_OPEN_WECHAT_APP_SECRET: ${OBB_OPEN_WECHAT_APP_SECRET}
       OBB_WECHAT_REDIRECT_URI: ${OBB_WECHAT_REDIRECT_URI}
+
+      OBB_GOOGLE_CLIENT_ID: ${OBB_GOOGLE_CLIENT_ID}
+      OBB_GOOGLE_CLIENT_SECRET: ${OBB_GOOGLE_CLIENT_SECRET}
+      OBB_GOOGLE_REDIRECT_URI: ${OBB_GOOGLE_REDIRECT_URI}
     healthcheck:
-      test: [ "CMD", "wget", "-q", "-O-", "http://127.0.0.1:8000/api/v1/health" ]
+      test: ['CMD', 'wget', '-q', '-O-', 'http://127.0.0.1:8000/api/v1/health']
       interval: 30s
       timeout: 3s
       retries: 5
@@ -50,12 +54,12 @@ services:
     image: ghcr.io/import-ai/omnibox-wizard:0.1.1
     restart: always
     volumes:
-      - "/etc/localtime:/etc/localtime:ro"
+      - '/etc/localtime:/etc/localtime:ro'
     environment:
-      ENV: "prod"
+      ENV: 'prod'
       OBW_VECTOR_HOST: ${OBW_MEILI_HOST:-http://meilisearch:7700}
       OBW_VECTOR_MEILI_API_KEY: ${GLOBAL_MEILI_KEY:-meili_master_key}
-      OBW_BACKEND_BASE_URL: "http://backend:8000"
+      OBW_BACKEND_BASE_URL: 'http://backend:8000'
 
       OBW_VECTOR_EMBEDDING_API_KEY: ${OBW_VECTOR_EMBEDDING_API_KEY}
       OBW_VECTOR_EMBEDDING_BASE_URL: ${OBW_VECTOR_EMBEDDING_BASE_URL}
@@ -77,7 +81,7 @@ services:
       OBW_TOOLS_RERANKER_THRESHOLD: ${OBW_TOOLS_RERANKER_THRESHOLD}
       OBW_TOOLS_RERANKER_K: ${OBW_TOOLS_RERANKER_K}
     healthcheck:
-      test: ["CMD", "wget", "-q", "-O-", "http://127.0.0.1:8000/api/v1/health"]
+      test: ['CMD', 'wget', '-q', '-O-', 'http://127.0.0.1:8000/api/v1/health']
       interval: 30s
       timeout: 3s
       retries: 5
@@ -87,10 +91,10 @@ services:
     image: ghcr.io/import-ai/omnibox-wizard:0.1.1
     restart: always
     environment:
-      ENV: "prod"
+      ENV: 'prod'
       OBW_VECTOR_HOST: ${OBW_MEILI_HOST:-http://meilisearch:7700}
       OBW_VECTOR_MEILI_API_KEY: ${GLOBAL_MEILI_KEY:-meili_master_key}
-      OBW_BACKEND_BASE_URL: "http://backend:8000"
+      OBW_BACKEND_BASE_URL: 'http://backend:8000'
 
       OBW_VECTOR_EMBEDDING_API_KEY: ${OBW_VECTOR_EMBEDDING_API_KEY}
       OBW_VECTOR_EMBEDDING_BASE_URL: ${OBW_VECTOR_EMBEDDING_BASE_URL}
@@ -103,11 +107,11 @@ services:
       OBW_TASK_ASR_MODEL: ${OBW_TASK_ASR_MODEL}
       OBW_TASK_PDF_READER_BASE_URL: ${OBW_TASK_PDF_READER_BASE_URL}
     volumes:
-      - "/etc/localtime:/etc/localtime:ro"
-    entrypoint: ["python", "main.py"]
-    command: ["--workers", "1"]
+      - '/etc/localtime:/etc/localtime:ro'
+    entrypoint: ['python', 'main.py']
+    command: ['--workers', '1']
     healthcheck:
-      test: ["CMD-SHELL", "pgrep python"]
+      test: ['CMD-SHELL', 'pgrep python']
       interval: 30s
       timeout: 3s
       retries: 5
