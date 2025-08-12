@@ -19,7 +19,9 @@ OmniBox（小黑）是一个简单、跨平台 All in One 的 AI 知识中枢，
 2. PDF、Word、PPT、MP3 等格式的文件上传与端到端解析、索引
 3. Markdown 编辑、渲染（公式、脑图、流程图、时序图、甘特图、五线谱等）
 4. 基于互联网和本地的数据库进行问答、写作
-5. 用户、团队系统、权限、分享管理、多租户、多语言、暗色模式、移动端自适应等
+5. **闪记**：iOS 端快速记录灵感，支持语音录制和文字笔记
+6. **分享**：iOS 端无缝分享文件至小黑
+7. 用户、团队系统、权限、分享管理、多租户、多语言、暗色模式、移动端自适应等
 
 ### 截图
 
@@ -67,6 +69,25 @@ OmniBox（小黑）是一个简单、跨平台 All in One 的 AI 知识中枢，
 <img src="assets/screenshots/markdown/SCR-20250727-ssou.png">
 <img src="assets/screenshots/markdown/SCR-20250727-sspn.png">
 <img src="assets/screenshots/markdown/SCR-20250727-ssqi.png"></td>
+</tr>
+</table>
+
+<table>
+<tr>
+<th>功能</th>
+<th>演示视频</th>
+</tr>
+<tr>
+<td>闪记 - 语音录制</td>
+<td><video src="https://github.com/user-attachments/assets/7d7c1089-5f7d-4575-b3cc-a2ee5effb3db" width="300"></video></td>
+</tr>
+<tr>
+<td>闪记 - 文字笔记</td>
+<td><video src="https://github.com/user-attachments/assets/b31c6bbd-78b3-4808-8370-a93e16ff6ddd" width="300"></video></td>
+</tr>
+<tr>
+<td>分享文件至小黑</td>
+<td><video src="https://github.com/user-attachments/assets/0000f920-4028-4d3d-8024-e4fbfb78a77f" width="300"></video></td>
 </tr>
 </table>
 </details>
