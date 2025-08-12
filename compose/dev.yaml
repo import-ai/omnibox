@@ -45,7 +45,7 @@ services:
       - '-H'
       - 'Content-Type: application/json'
       - '-d'
-      - '{"username":"username","password":"Passw0rd","password_repeat":"Passw0rd","email":"omnibox@qq.com"}'
+      - '{"username":"Zs4ioltDLd","password":"Nh4PLRKPQw","email":"omnibox@qq.com"}'
     depends_on:
       backend:
         condition: service_healthy
