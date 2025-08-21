@@ -10,6 +10,8 @@ services:
       context: backend
     ports:
       - "8000:8000"
+    environment:
+      ENV: "dev"
 
   wizard:
     image: ghcr.io/import-ai/omnibox-wizard:main
@@ -24,6 +26,8 @@ services:
     image: ghcr.io/import-ai/omnibox-wizard:main
     build:
       context: wizard
+    environment:
+      ENV: "dev"
 
   postgres:
     ports:
