@@ -124,7 +124,7 @@ services:
     entrypoint: ['python', 'main.py']
     command: ['--workers', '1']
     healthcheck:
-      test: ['CMD-SHELL', 'pgrep python']
+      test: ['CMD', 'wget', '-q', '-O-', 'http://127.0.0.1:8000/health']
       interval: 30s
       timeout: 3s
       retries: 5
