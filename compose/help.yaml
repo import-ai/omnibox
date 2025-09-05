@@ -1,6 +1,6 @@
 services:
   help:
-    image: ghcr.io/import-ai/omnibox-help:main
+    image: ghcr.io/import-ai/omnibox-help:latest
     build:
       context: help
     volumes:
