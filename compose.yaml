@@ -12,6 +12,17 @@ services:
       backend:
         condition: service_healthy
 
+  help:
+    image: ghcr.io/import-ai/omnibox-help:0.1.1
+    volumes:
+      - '/etc/localtime:/etc/localtime:ro'
+    ports:
+      - ${OB_HELP_PORT:-8081}:8081
+    restart: always
+    depends_on:
+      backend:
+        condition: service_healthy
+
   backend:
     image: ghcr.io/import-ai/omnibox-backend:0.1.4
     restart: always
