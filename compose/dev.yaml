@@ -4,11 +4,6 @@ services:
     build:
       context: web
 
-  help:
-    image: ghcr.io/import-ai/omnibox-help:main
-    build:
-      context: help
-
   backend:
     image: ghcr.io/import-ai/omnibox-backend:main
     build:
