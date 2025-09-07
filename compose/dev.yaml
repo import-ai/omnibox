@@ -11,7 +11,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      ENV: "dev"
+      ENV: "${ENV:-local}"
 
   wizard:
     image: ghcr.io/import-ai/omnibox-wizard:main
@@ -20,14 +20,14 @@ services:
     ports:
       - "8001:8000"
     environment:
-      ENV: "dev"
+      ENV: "${ENV:-local}"
 
   wizard-worker:
     image: ghcr.io/import-ai/omnibox-wizard:main
     build:
       context: wizard
     environment:
-      ENV: "dev"
+      ENV: "${ENV:-local}"
 
   postgres:
     ports:
