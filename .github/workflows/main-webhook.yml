@@ -1,0 +1,15 @@
+name: Main Branch Webhook
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  webhook:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call webhook
+        run: |
+          curl "${{ secrets.DEV_WEBHOOK_URL }}/pre" \
+            -H "Authorization: Bearer ${{ secrets.DEV_WEBHOOK_API_KEY }}"
