@@ -27,6 +27,10 @@ services:
       OBB_POSTGRES_URL: ${OBB_POSTGRES_URL:-postgres://omnibox:omnibox@postgres:5432/omnibox}
       OBB_MINIO_URL: ${OBB_MINIO_URL:-http://username:password@minio:9000/omnibox}
 
+      OBB_KAFKA_BROKER: ${OBB_KAFKA_BROKER}
+      OBB_KAFKA_TOPIC: ${OBB_KAFKA_TOPIC}
+      OBB_KAFKA_CLIENT_ID: ${OBB_KAFKA_CLIENT_ID}
+
       OBB_JWT_SECRET: ${OBB_JWT_SECRET}
       OBB_JWT_EXPIRE: ${OBB_JWT_EXPIRE:-2678400s}
 
