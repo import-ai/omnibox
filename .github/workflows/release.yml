@@ -1,0 +1,20 @@
+name: Release Webhook
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  webhook:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get version identifier
+        id: get_version
+        run: |
+          echo "version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Call webhook
+        run: |
+          curl "${{ secrets.DEV_WEBHOOK_URL }}/prod?tag=${{ steps.get_version.outputs.version }}" \
+            -H "Authorization: Bearer ${{ secrets.DEV_WEBHOOK_API_KEY }}"
