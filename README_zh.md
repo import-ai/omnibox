@@ -1,4 +1,4 @@
-# OmniBox - 小黑
+# 小黑 - OmniBox
 
 [![omnibox-web](https://img.shields.io/github/v/release/import-ai/omnibox-web?color=brightgreen&label=Web&sort=semver)](https://github.com/import-ai/omnibox-web/releases)
 [![omnibox-backend](https://img.shields.io/github/v/release/import-ai/omnibox-backend?color=blue&label=Backend&sort=semver)](https://github.com/import-ai/omnibox-backend/releases)
@@ -7,11 +7,15 @@
 
 [English](./README.md) | 简体中文
 
+## 文档
+
+[小黑帮助文档](https://www.omnibox.pro/docs/zh-cn/?utm_source=gh_readme_zh)
+
 ## 简介
 
 > “小黑”取自《爱情公寓》中的“楼下小黑”
 
-OmniBox（小黑）是一个简单、跨平台 All in One 的 AI 知识中枢，你需要做的只有收集，然后提问。
+小黑（OmniBox）是一个简单、跨平台 All in One 的 AI 知识中枢，收集、整理、应用、分享，一应俱全。
 
 ### 核心特性
 
@@ -21,7 +25,8 @@ OmniBox（小黑）是一个简单、跨平台 All in One 的 AI 知识中枢，
 4. 基于互联网和本地的数据库进行问答、写作
 5. **闪记**：iOS 端快速记录灵感，支持语音录制和文字笔记
 6. **分享**：iOS 端无缝分享文件至小黑
-7. 用户、团队系统、权限、分享管理、多租户、多语言、暗色模式、移动端自适应等
+7. **微信助手**：在微信中随时随地将文件、网页、视频、语音、文字、聊天记录保存至小黑
+8. 用户、团队系统、权限、分享管理、多租户、多语言、暗色模式、移动端自适应等
 
 ### 截图
 
@@ -94,13 +99,11 @@ OmniBox（小黑）是一个简单、跨平台 All in One 的 AI 知识中枢，
 
 ## 快速开始
 
-欢迎使用我们的在线服务：[omnibox.pro](https://www.omnibox.pro)，支持邮箱注册以及微信登录。
+欢迎使用我们的在线服务：[omnibox.pro](https://www.omnibox.pro/?utm_source=gh_readme_zh)，支持邮箱注册以及谷歌、微信登录。
 
 ### 浏览器插件
 
-[![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/gckiocdfdaofgabchobljcdimjieookl?label=Google%20Chrome&color=yellow)](https://chromewebstore.google.com/detail/save-to-omnibox/gckiocdfdaofgabchobljcdimjieookl)
-[![Mozilla Add-on Version](https://img.shields.io/amo/v/save-to-omnibox?label=Mozilla%20Firefox&color=%23f72f54)
-](https://addons.mozilla.org/en-US/firefox/addon/save-to-omnibox/)
+[浏览器插件安装 | 小黑帮助文档](https://www.omnibox.pro/docs/zh-cn/collect/browser-extension)
 
 ### 部署
 
@@ -122,8 +125,8 @@ bash scripts/dev.yaml up -d --build
 
 ## 迭代计划
 
-1. RSS 订阅
-2. Agent、文件夹、文档公开分享
-3. 微信小程序
-4. 提升写作的长度上限（目前最多能写 5000 字）
-5. API
+- [x] Agent、文件夹、文档公开分享
+- [x] 微信助手
+- [x] Open API
+- [ ] 微信小程序
+- [ ] 订阅
