@@ -7,6 +7,10 @@
 
 English | [简体中文](./README_zh.md)
 
+## Docs
+
+[OmniBox Docs](https://www.omnibox.pro/docs/?utm_source=gh_readme_en)
+
 ## Introduction
 
 OmniBox (小黑) is a simple, cross-platform, all-in-one AI knowledge hub. All you need to do is collect, then ask.
@@ -19,7 +23,8 @@ OmniBox (小黑) is a simple, cross-platform, all-in-one AI knowledge hub. All y
 4. Q&A and writing based on both Internet and local databases.
 5. **Flash**: Quick capture of fleeting ideas on iOS with support for voice recordings and text notes.
 6. **Share**: Seamless file sharing to OmniBox directly from iOS.
-7. User and team system, permissions, sharing management, multi-tenancy, multi-language, dark mode, mobile responsiveness, and more.
+7. **WeChat Bot**: Save files, webpages, videos, voice messages, text, and chat records to OmniBox anytime, anywhere via WeChat.
+8. User and team system, permissions, sharing management, multi-tenancy, multi-language, dark mode, mobile responsiveness, and more.
 
 ### Screenshots
 
@@ -92,13 +97,11 @@ OmniBox (小黑) is a simple, cross-platform, all-in-one AI knowledge hub. All y
 
 ## Quick Start
 
-Welcome to our online service: [omnibox.pro](https://www.omnibox.pro), supporting email registration and WeChat login.
+Welcome to our online service: [omnibox.pro](https://www.omnibox.pro/?utm_source=gh_readme_en), supporting login via Email, Google and WeChat.
 
 ### Browser Extension
 
-[![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/gckiocdfdaofgabchobljcdimjieookl?label=Google%20Chrome&color=yellow)](https://chromewebstore.google.com/detail/save-to-omnibox/gckiocdfdaofgabchobljcdimjieookl)
-[![Mozilla Add-on Version](https://img.shields.io/amo/v/save-to-omnibox?label=Mozilla%20Firefox&color=%23f72f54)
-](https://addons.mozilla.org/en-US/firefox/addon/save-to-omnibox/)
+[Browser Extension Installation | OmniBox Docs](https://www.omnibox.pro/docs/collect/browser-extension)
 
 ### Deployment
 
@@ -118,10 +121,10 @@ cp example.env .env
 bash scripts/dev.sh up -d --build
 ```
 
-## TODO
+## Roadmap
 
-1. RSS subscription
-2. Agent, folder, and document public sharing
-3. WeChat Mini Program
-4. Increase writing length limit (currently can write up to 5000 words)
-5. API
+- [x] Agent, folder, and document public sharing
+- [x] WeChat Bot
+- [x] Open API
+- [ ] WeChat Mini Program
+- [ ] RSS Subscription
