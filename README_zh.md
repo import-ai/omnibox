@@ -130,3 +130,8 @@ bash scripts/dev.yaml up -d --build
 - [x] Open API
 - [ ] 微信小程序
 - [ ] 订阅
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=import-ai/omnibox&type=date&legend=top-left)](https://www.star-history.com/#import-ai/omnibox&type=date&legend=top-left)
+
