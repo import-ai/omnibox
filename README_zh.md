@@ -111,7 +111,7 @@
 git clone https://github.com/import-ai/omnibox.git
 cd omnibox
 cp example.env .env
-bash scripts/compose.yaml up -d
+bash scripts/compose.sh up -d
 ```
 
 ### 本地开发
@@ -120,7 +120,7 @@ bash scripts/compose.yaml up -d
 git clone --recurse-submodules https://github.com/import-ai/omnibox.git
 cd omnibox
 cp example.env .env
-bash scripts/dev.yaml up -d --build
+bash scripts/dev.sh up -d --build
 ```
 
 ## 迭代计划
