@@ -108,7 +108,7 @@
 ### 部署
 
 ```shell
-git clone https://github.com/import-ai/omnibox.git
+GIT_LFS_SKIP_SMUDGE=1 git clone https://github.com/import-ai/omnibox.git
 cd omnibox
 cp example.env .env
 bash scripts/compose.sh up -d
