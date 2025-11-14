@@ -40,8 +40,10 @@ services:
     restart: always
     command: 'server /data --console-address ":9001"'
     environment:
-      MINIO_ROOT_USER: username
-      MINIO_ROOT_PASSWORD: password
+      MINIO_ROOT_USER: ${OBB_S3_ACCESS_KEY_ID}
+      MINIO_ROOT_PASSWORD: ${OBB_S3_SECRET_ACCESS_KEY}
+    ports:
+      - "9000:9000"
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
       - '${PWD}/data/minio:/data'

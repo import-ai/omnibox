@@ -38,8 +38,8 @@ services:
       - '/etc/localtime:/etc/localtime:ro'
     environment:
       ENV: prod
-      OBW_VECTOR_HOST: ${OBW_MEILI_HOST:-http://meilisearch:7700}
-      OBW_VECTOR_MEILI_API_KEY: ${GLOBAL_MEILI_KEY:-meili_master_key}
+      OBW_VECTOR_HOST: ${OBW_MEILI_HOST}
+      OBW_VECTOR_MEILI_API_KEY: ${GLOBAL_MEILI_KEY}
     env_file:
       - .env
     healthcheck:
@@ -54,8 +54,8 @@ services:
     restart: always
     environment:
       ENV: prod
-      OBW_VECTOR_HOST: ${OBW_MEILI_HOST:-http://meilisearch:7700}
-      OBW_VECTOR_MEILI_API_KEY: ${GLOBAL_MEILI_KEY:-meili_master_key}
+      OBW_VECTOR_HOST: ${OBW_MEILI_HOST}
+      OBW_VECTOR_MEILI_API_KEY: ${GLOBAL_MEILI_KEY}
     env_file:
       - .env
     volumes:
