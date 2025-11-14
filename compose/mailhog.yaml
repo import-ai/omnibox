@@ -1,0 +1,17 @@
+name: omnibox
+
+services:
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    restart: always
+    ports:
+      - "8025:8025"  # Web UI
+      - "1025:1025"  # SMTP
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "8025"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
