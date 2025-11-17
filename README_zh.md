@@ -7,6 +7,8 @@
 
 [English](./README.md) | 简体中文
 
+<img width="923" height="620" alt="Image" src="https://github.com/user-attachments/assets/35dad1b4-5652-4f2f-8eac-38c49da0545f" />
+
 ## 文档
 
 [小黑帮助文档](https://www.omnibox.pro/docs/zh-cn/?utm_source=gh_readme_zh)
@@ -28,91 +30,17 @@
 7. **微信助手**：在微信中随时随地将文件、网页、视频、语音、文字、聊天记录保存至小黑
 8. 用户、团队系统、权限、分享管理、多租户、多语言、暗色模式、移动端自适应等
 
-### 截图
-
-<details>
-<table>
-<tr>
-<th>功能</th>
-<th>源</th>
-<th>解析结果</th>
-</tr>
-<tr>
-<td>收藏网页</td>
-<td><img src="assets/screenshots/extension/SCR-20250727-uniy.png" alt="Source web"></td>
-<td><img src="assets/screenshots/extension/SCR-20250727-srzd.png" alt="Extension parsing result"></td>
-</tr>
-<tr>
-<td rowspan="2">文件解析</td>
-<td><a href="assets/example.mp3">example.mp3</a></td>
-<td><img src="assets/screenshots/uploads/SCR-20250727-uakj.png"></td>
-</tr>
-<tr>
-<td><img src="assets/screenshots/uploads/SCR-20250727-ujjl.png"></td>
-<td><img src="assets/screenshots/uploads/SCR-20250727-uanf.png">
-<img src="assets/screenshots/uploads/SCR-20250727-uaoi.png"></td>
-</tr>
-</table>
-
-<table>
-<tr>
-<th>功能</th>
-<th>截图</th>
-</tr>
-<tr>
-<td>问答</td>
-<td><img src="assets/screenshots/chat/SCR-20250727-uder.png"></td>
-</tr>
-<tr>
-<td>写作</td>
-<td><img src="assets/screenshots/chat/SCR-20250727-udta.png">
-<img src="assets/screenshots/chat/SCR-20250727-uegk.png"></td>
-</tr>
-<tr>
-<td>Markdown</td>
-<td><img src="assets/screenshots/markdown/SCR-20250727-ssnr.png">
-<img src="assets/screenshots/markdown/SCR-20250727-ssou.png">
-<img src="assets/screenshots/markdown/SCR-20250727-sspn.png">
-<img src="assets/screenshots/markdown/SCR-20250727-ssqi.png"></td>
-</tr>
-</table>
-
-<table>
-<tr>
-<th>功能</th>
-<th>演示视频</th>
-</tr>
-<tr>
-<td>闪记 - 语音录制</td>
-<td><video src="https://github.com/user-attachments/assets/7d7c1089-5f7d-4575-b3cc-a2ee5effb3db" width="300"></video></td>
-</tr>
-<tr>
-<td>闪记 - 文字笔记</td>
-<td><video src="https://github.com/user-attachments/assets/b31c6bbd-78b3-4808-8370-a93e16ff6ddd" width="300"></video></td>
-</tr>
-<tr>
-<td>分享文件至小黑</td>
-<td><video src="https://github.com/user-attachments/assets/0000f920-4028-4d3d-8024-e4fbfb78a77f" width="300"></video></td>
-</tr>
-</table>
-</details>
-
 ## 快速开始
 
 欢迎使用我们的在线服务：[omnibox.pro](https://www.omnibox.pro/?utm_source=gh_readme_zh)，支持邮箱注册以及谷歌、微信登录。
 
 ### 浏览器插件
 
-[浏览器插件安装 | 小黑帮助文档](https://www.omnibox.pro/docs/zh-cn/collect/browser-extension)
+[浏览器插件安装 | 小黑帮助文档](https://www.omnibox.pro/docs/zh-cn/browser-extension?utm_source=gh_readme_zh)
 
 ### 部署
 
-```shell
-GIT_LFS_SKIP_SMUDGE=1 git clone https://github.com/import-ai/omnibox.git
-cd omnibox
-cp example.env .env
-bash scripts/compose.sh up -d
-```
+[本地部署](https://www.omnibox.pro/docs/zh-cn/deploy?utm_source=gh_readme_zh)
 
 ### 本地开发
 
@@ -134,4 +62,3 @@ bash scripts/dev.sh up -d --build
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=import-ai/omnibox&type=date&legend=top-left)](https://www.star-history.com/#import-ai/omnibox&type=date&legend=top-left)
-
