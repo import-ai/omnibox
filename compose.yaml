@@ -2,7 +2,7 @@ name: omnibox
 
 services:
   web:
-    image: ghcr.io/import-ai/omnibox-web:0.1.4
+    image: ghcr.io/import-ai/omnibox-web:0.1.10
     volumes:
       - '/etc/localtime:/etc/localtime:ro'
     ports:
@@ -13,39 +13,14 @@ services:
         condition: service_healthy
 
   backend:
-    image: ghcr.io/import-ai/omnibox-backend:0.1.4
+    image: ghcr.io/import-ai/omnibox-backend:0.1.10
     restart: always
     volumes:
       - '/etc/localtime:/etc/localtime:ro'
     environment:
-      OBB_LOG_LEVELS: ${OBB_LOG_LEVELS:-error,warn,log}
       ENV: prod
-      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT}
-
-      OBB_WIZARD_BASE_URL: ${OBB_WIZARD_BASE_URL:-http://wizard:8000}
-
-      OBB_POSTGRES_URL: ${OBB_POSTGRES_URL:-postgres://omnibox:omnibox@postgres:5432/omnibox}
-      OBB_MINIO_URL: ${OBB_MINIO_URL:-http://username:password@minio:9000/omnibox}
-
-      OBB_KAFKA_BROKER: ${OBB_KAFKA_BROKER}
-      OBB_KAFKA_TOPIC: ${OBB_KAFKA_TOPIC}
-      OBB_KAFKA_CLIENT_ID: ${OBB_KAFKA_CLIENT_ID}
-
-      OBB_JWT_SECRET: ${OBB_JWT_SECRET}
-      OBB_JWT_EXPIRE: ${OBB_JWT_EXPIRE:-2678400s}
-
-      OBB_MAIL_TRANSPORT: ${OBB_MAIL_TRANSPORT}
-      OBB_MAIL_FROM: ${OBB_MAIL_FROM}
-
-      OBB_WECHAT_APP_ID: ${OBB_WECHAT_APP_ID}
-      OBB_WECHAT_APP_SECRET: ${OBB_WECHAT_APP_SECRET}
-      OBB_OPEN_WECHAT_APP_ID: ${OBB_OPEN_WECHAT_APP_ID}
-      OBB_OPEN_WECHAT_APP_SECRET: ${OBB_OPEN_WECHAT_APP_SECRET}
-      OBB_WECHAT_REDIRECT_URI: ${OBB_WECHAT_REDIRECT_URI}
-
-      OBB_GOOGLE_CLIENT_ID: ${OBB_GOOGLE_CLIENT_ID}
-      OBB_GOOGLE_CLIENT_SECRET: ${OBB_GOOGLE_CLIENT_SECRET}
-      OBB_GOOGLE_REDIRECT_URI: ${OBB_GOOGLE_REDIRECT_URI}
+    env_file:
+      - .env
     healthcheck:
       test: ['CMD', 'wget', '-q', '-O-', 'http://127.0.0.1:8000/api/v1/health']
       interval: 30s
@@ -57,37 +32,16 @@ services:
         condition: service_healthy
 
   wizard:
-    image: ghcr.io/import-ai/omnibox-wizard:0.1.4
+    image: ghcr.io/import-ai/omnibox-wizard:0.1.9
     restart: always
     volumes:
       - '/etc/localtime:/etc/localtime:ro'
     environment:
       ENV: prod
-      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT}
-
-      OBW_VECTOR_HOST: ${OBW_MEILI_HOST:-http://meilisearch:7700}
-      OBW_VECTOR_MEILI_API_KEY: ${GLOBAL_MEILI_KEY:-meili_master_key}
-      OBW_BACKEND_BASE_URL: 'http://backend:8000'
-
-      OBW_VECTOR_EMBEDDING_API_KEY: ${OBW_VECTOR_EMBEDDING_API_KEY}
-      OBW_VECTOR_EMBEDDING_BASE_URL: ${OBW_VECTOR_EMBEDDING_BASE_URL}
-      OBW_VECTOR_EMBEDDING_MODEL: ${OBW_VECTOR_EMBEDDING_MODEL}
-
-      OBW_GRIMOIRE_OPENAI_DEFAULT_API_KEY: ${OBW_GRIMOIRE_OPENAI_DEFAULT_API_KEY}
-      OBW_GRIMOIRE_OPENAI_DEFAULT_BASE_URL: ${OBW_GRIMOIRE_OPENAI_DEFAULT_BASE_URL}
-      OBW_GRIMOIRE_OPENAI_DEFAULT_MODEL: ${OBW_GRIMOIRE_OPENAI_DEFAULT_MODEL}
-      OBW_GRIMOIRE_OPENAI_MINI_MODEL: ${OBW_GRIMOIRE_OPENAI_MINI_MODEL}
-      OBW_GRIMOIRE_OPENAI_LARGE_MODEL: ${OBW_GRIMOIRE_OPENAI_LARGE_MODEL}
-      OBW_GRIMOIRE_OPENAI_LARGE_THINKING_MODEL: ${OBW_GRIMOIRE_OPENAI_LARGE_THINKING_MODEL}
-
-      OBW_TOOLS_SEARXNG_BASE_URL: ${OBW_TOOLS_SEARXNG_BASE_URL}
-      OBW_TOOLS_SEARXNG_ENGINES: ${OBW_TOOLS_SEARXNG_ENGINES}
-
-      OBW_TOOLS_RERANKER_OPENAI_API_KEY: ${OBW_TOOLS_RERANKER_OPENAI_API_KEY}
-      OBW_TOOLS_RERANKER_OPENAI_MODEL: ${OBW_TOOLS_RERANKER_OPENAI_MODEL}
-      OBW_TOOLS_RERANKER_OPENAI_BASE_URL: ${OBW_TOOLS_RERANKER_OPENAI_BASE_URL}
-      OBW_TOOLS_RERANKER_THRESHOLD: ${OBW_TOOLS_RERANKER_THRESHOLD}
-      OBW_TOOLS_RERANKER_K: ${OBW_TOOLS_RERANKER_K}
+      OBW_VECTOR_HOST: ${OBW_MEILI_HOST}
+      OBW_VECTOR_MEILI_API_KEY: ${GLOBAL_MEILI_KEY}
+    env_file:
+      - .env
     healthcheck:
       test: ['CMD', 'wget', '-q', '-O-', 'http://127.0.0.1:8000/api/v1/health']
       interval: 30s
@@ -96,34 +50,14 @@ services:
       start_period: 5s
 
   wizard-worker:
-    image: ghcr.io/import-ai/omnibox-wizard:0.1.4
+    image: ghcr.io/import-ai/omnibox-wizard:0.1.9
     restart: always
     environment:
       ENV: prod
-      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT}
-
-      OBW_VECTOR_HOST: ${OBW_MEILI_HOST:-http://meilisearch:7700}
-      OBW_VECTOR_MEILI_API_KEY: ${GLOBAL_MEILI_KEY:-meili_master_key}
-      OBW_BACKEND_BASE_URL: 'http://backend:8000'
-
-      OBW_VECTOR_EMBEDDING_API_KEY: ${OBW_VECTOR_EMBEDDING_API_KEY}
-      OBW_VECTOR_EMBEDDING_BASE_URL: ${OBW_VECTOR_EMBEDDING_BASE_URL}
-      OBW_VECTOR_EMBEDDING_MODEL: ${OBW_VECTOR_EMBEDDING_MODEL}
-
-      OBW_TASK_OFFICE_OPERATOR_BASE_URL: ${OBW_TASK_OFFICE_OPERATOR_BASE_URL}
-      OBW_TASK_DOCLING_BASE_URL: ${OBW_TASK_DOCLING_BASE_URL}
-
-      OBW_TASK_ASR_API_KEY: ${OBW_TASK_ASR_API_KEY}
-      OBW_TASK_ASR_BASE_URL: ${OBW_TASK_ASR_BASE_URL}
-      OBW_TASK_ASR_MODEL: ${OBW_TASK_ASR_MODEL}
-      OBW_TASK_PDF_READER_BASE_URL: ${OBW_TASK_PDF_READER_BASE_URL}
-
-      OBW_GRIMOIRE_OPENAI_DEFAULT_API_KEY: ${OBW_GRIMOIRE_OPENAI_DEFAULT_API_KEY}
-      OBW_GRIMOIRE_OPENAI_DEFAULT_BASE_URL: ${OBW_GRIMOIRE_OPENAI_DEFAULT_BASE_URL}
-      OBW_GRIMOIRE_OPENAI_DEFAULT_MODEL: ${OBW_GRIMOIRE_OPENAI_DEFAULT_MODEL}
-      OBW_GRIMOIRE_OPENAI_MINI_MODEL: ${OBW_GRIMOIRE_OPENAI_MINI_MODEL}
-      OBW_GRIMOIRE_OPENAI_LARGE_MODEL: ${OBW_GRIMOIRE_OPENAI_LARGE_MODEL}
-      OBW_GRIMOIRE_OPENAI_LARGE_THINKING_MODEL: ${OBW_GRIMOIRE_OPENAI_LARGE_THINKING_MODEL}
+      OBW_VECTOR_HOST: ${OBW_MEILI_HOST}
+      OBW_VECTOR_MEILI_API_KEY: ${GLOBAL_MEILI_KEY}
+    env_file:
+      - .env
     volumes:
       - '/etc/localtime:/etc/localtime:ro'
     entrypoint: ['python', 'main.py']
