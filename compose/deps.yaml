@@ -45,7 +45,7 @@ services:
       MINIO_ROOT_USER: ${OBB_S3_ACCESS_KEY_ID}
       MINIO_ROOT_PASSWORD: ${OBB_S3_SECRET_ACCESS_KEY}
     ports:
-      - "9000:9000"
+      - "${MINIO_API_PORT:-9000}:9000"
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
       - '${PWD}/data/minio:/data'
@@ -73,8 +73,7 @@ services:
     image: mailhog/mailhog:v1.0.1
     restart: always
     ports:
-      - "8025:8025"  # Web UI
-      - "1025:1025"  # SMTP
+      - "${MAILHOG_WEB_PORT:-8025}:8025"  # Web UI
     volumes:
       - /etc/localtime:/etc/localtime:ro
     healthcheck:
