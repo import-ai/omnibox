@@ -1,0 +1,20 @@
+services:
+  web:
+    image: ghcr.io/import-ai/omnibox-web:main
+    build:
+      context: web
+
+  backend:
+    image: ghcr.io/import-ai/omnibox-backend:main
+    build:
+      context: backend
+
+  wizard:
+    image: ghcr.io/import-ai/omnibox-wizard:main
+    build:
+      context: wizard
+
+  wizard-worker:
+    image: ghcr.io/import-ai/omnibox-wizard:main
+    build:
+      context: wizard
