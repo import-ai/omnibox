@@ -41,6 +41,10 @@ services:
     ports:
       - "7700:7700"
 
+  kafka:
+    ports:
+      - "9092:9092"
+
   init:
     image: alpine/curl:8.10.0
     command: 
