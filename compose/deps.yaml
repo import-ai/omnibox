@@ -85,8 +85,6 @@ services:
 
   kafka:
     image: bitnamilegacy/kafka:4.0
-    ports:
-      - 19092:9092
     environment:
       # KRaft settings
       - KAFKA_CFG_NODE_ID=0
