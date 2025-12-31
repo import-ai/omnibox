@@ -45,7 +45,7 @@ services:
   kafka:
     ports:
       - "9092:9092"
-  
+
   mailhog:
     ports:
       - "1025:1025"
