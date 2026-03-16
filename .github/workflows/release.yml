@@ -16,5 +16,9 @@ jobs:
 
       - name: Call webhook
         run: |
-          curl "${{ secrets.DEV_WEBHOOK_URL }}/prod?tag=${{ steps.get_version.outputs.version }}" \
+          TAG_NAME="${{ steps.get_version.outputs.version }}"
+          REF="$TAG_NAME"
+          REF_LINK_TEXT="$TAG_NAME"
+          REF_LINK_URL="${{ github.server_url }}/${{ github.repository }}/releases/tag/$TAG_NAME"
+          curl "${{ secrets.DEV_WEBHOOK_URL }}/prod?tag=$TAG_NAME&ref=$REF&ref_link_text=$REF_LINK_TEXT&ref_link_url=$REF_LINK_URL" \
             -H "Authorization: Bearer ${{ secrets.DEV_WEBHOOK_API_KEY }}"

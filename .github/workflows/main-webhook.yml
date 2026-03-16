@@ -11,5 +11,9 @@ jobs:
     steps:
       - name: Call webhook
         run: |
-          curl "${{ secrets.DEV_WEBHOOK_URL }}/pre" \
+          REF="${{ github.ref_name }}"
+          REF_LINK_TEXT="${{ github.ref_name }}"
+          REF_LINK_URL="${{ github.server_url }}/${{ github.repository }}/tree/${{ github.ref_name }}"
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          curl "${{ secrets.DEV_WEBHOOK_URL }}/pre?run_url=$RUN_URL&ref=$REF&ref_link_text=$REF_LINK_TEXT&ref_link_url=$REF_LINK_URL" \
             -H "Authorization: Bearer ${{ secrets.DEV_WEBHOOK_API_KEY }}"
