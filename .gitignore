@@ -6,3 +6,4 @@ compose.override.yaml
 compose.tmp.yaml
 tmp.yaml
 data
+.playwright*
