@@ -1,0 +1,16 @@
+services:
+  postgres:
+    volumes:
+      - "${PWD}/data/postgres:/var/lib/postgresql/data"
+
+  minio:
+    volumes:
+      - "${PWD}/data/minio:/data"
+
+  weaviate:
+    volumes:
+      - "${PWD}/data/weaviate:/var/lib/weaviate"
+
+  kafka:
+    volumes:
+      - "${PWD}/data/kafka:/bitnami/kafka"

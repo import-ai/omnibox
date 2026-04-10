@@ -1,0 +1,21 @@
+services:
+  backend:
+    depends_on:
+      postgres:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+      mailhog:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+
+  wizard:
+    depends_on:
+      weaviate:
+        condition: service_healthy
+
+  wizard-worker:
+    depends_on:
+      weaviate:
+        condition: service_healthy

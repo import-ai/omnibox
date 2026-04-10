@@ -1,0 +1,25 @@
+services:
+  postgres:
+    ports:
+      - "5432:5432"
+
+  minio:
+    ports:
+      - "9001:9001"
+
+  weaviate:
+    ports:
+      - "50050:50050"
+      - "50051:50051"
+
+  kafka:
+    ports:
+      - "${OB_KAFKA_PORT:-9092}:9092"
+
+  redis:
+    ports:
+      - "6379:6379"
+
+  mailpit:
+    ports:
+      - "1025:1025"

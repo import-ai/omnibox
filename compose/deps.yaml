@@ -1,33 +1,9 @@
 services:
-  backend:
-    depends_on:
-      postgres:
-        condition: service_healthy
-      meilisearch:
-        condition: service_healthy
-      minio:
-        condition: service_healthy
-      mailhog:
-        condition: service_healthy
-      kafka:
-        condition: service_healthy
-
-  wizard:
-    depends_on:
-      meilisearch:
-        condition: service_healthy
-
-  wizard-worker:
-    depends_on:
-      meilisearch:
-        condition: service_healthy
-
   postgres:
     image: postgres:17.5
     restart: always
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
-      - ${PWD}/data/postgres:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: omnibox
       POSTGRES_USER: omnibox
@@ -44,52 +20,67 @@ services:
     restart: always
     command: 'server /data --console-address ":9001"'
     environment:
-      MINIO_ROOT_USER: ${OBB_S3_ACCESS_KEY_ID}
-      MINIO_ROOT_PASSWORD: ${OBB_S3_SECRET_ACCESS_KEY}
+      MINIO_ROOT_USER: ${OBB_S3_ACCESS_KEY_ID:-username}
+      MINIO_ROOT_PASSWORD: ${OBB_S3_SECRET_ACCESS_KEY:-password}
     ports:
       - "${MINIO_API_PORT:-9000}:9000"
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
-      - '${PWD}/data/minio:/data'
     healthcheck:
       test: [ "CMD", "curl", "-I", "http://127.0.0.1:9000/minio/health/live" ]
       interval: 5s
       timeout: 3s
       retries: 5
 
-  meilisearch:
-    image: getmeili/meilisearch:v1.14
-    restart: always
+  weaviate:
+    image: cr.weaviate.io/semitechnologies/weaviate:1.36.0
+    restart: unless-stopped
+    command:
+      - --host
+      - 0.0.0.0
+      - --port
+      - "50050"
+      - --scheme
+      - http
+    working_dir: "/go/pkg/mod"
     environment:
-      MEILI_MASTER_KEY: ${GLOBAL_MEILI_KEY}
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'false'
+      AUTHENTICATION_APIKEY_ENABLED: 'true'
+      AUTHENTICATION_APIKEY_ALLOWED_KEYS: '7F3440CDF1F7430DA2FB58C1CD4D2FB7'
+      AUTHENTICATION_APIKEY_USERS: 'omnibox'
+      QUERY_DEFAULTS_LIMIT: "25"
+      AUTOSCHEMA_ENABLED: "false"
+      ENABLE_TOKENIZER_GSE_CH: "true"
+      PERSISTENCE_DATA_PATH: /var/lib/weaviate
+      CLUSTER_HOSTNAME: node-1
+      LOG_LEVEL: info
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
-      - '${PWD}/data/meili_data:/meili_data'
     healthcheck:
-      test: [ "CMD", "curl", "-I", "http://127.0.0.1:7700/health" ]
-      interval: 5s
-      timeout: 3s
+      test: ["CMD", "wget", "--no-verbose", "--tries=3", "--spider", "http://localhost:50050/v1/.well-known/ready"]
+      interval: 10s
+      timeout: 5s
       retries: 5
+      start_period: 30s
 
   kafka:
     image: bitnamilegacy/kafka:4.0
     user: 0:0
     environment:
       # KRaft settings
-      - KAFKA_CFG_NODE_ID=0
-      - KAFKA_CFG_PROCESS_ROLES=controller,broker
-      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka:9093
+      KAFKA_CFG_NODE_ID: 0
+      KAFKA_CFG_PROCESS_ROLES: controller,broker
+      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 0@kafka:9093
       # Listeners
-      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
-      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
-      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
-      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
-      - ALLOW_PLAINTEXT_LISTENER=yes
+      KAFKA_CFG_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://${OB_KAFKA_HOST:-kafka}:${OB_KAFKA_PORT:-9092}
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_CFG_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CFG_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      ALLOW_PLAINTEXT_LISTENER: yes
     restart: unless-stopped
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
-      - '${PWD}/data/kafka:/bitnami/kafka'
     healthcheck:
       test: ["CMD-SHELL", "kafka-broker-api-versions.sh --bootstrap-server localhost:9092"]
       interval: 10s
@@ -97,11 +88,18 @@ services:
       retries: 5
       start_period: 30s
 
-  mailhog:
-    image: mailhog/mailhog:v1.0.1
+  redis:
+    image: redis:8.2.1
+    command: redis-server
+    restart: always
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+
+  mailpit:
+    image: axllent/mailpit:v1.29
     restart: always
     ports:
-      - "${MAILHOG_WEB_PORT:-8025}:8025"  # Web UI
+      - "${MAILPIT_WEB_PORT:-8025}:8025"  # Web UI
     volumes:
       - /etc/localtime:/etc/localtime:ro
     healthcheck:
@@ -110,4 +108,3 @@ services:
       timeout: 5s
       retries: 3
       start_period: 15s
-
