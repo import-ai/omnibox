@@ -56,7 +56,7 @@ bash scripts/dev.sh up -d --build
 - [x] Agent、文件夹、文档公开分享
 - [x] 微信助手
 - [x] Open API
-- [ ] 微信小程序
+- [x] 移动端 APP
 - [ ] 订阅
 
 ## Star History
