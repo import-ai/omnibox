@@ -54,7 +54,7 @@ bash scripts/dev.sh up -d --build
 - [x] Agent, folder, and document public sharing
 - [x] WeChat Bot
 - [x] Open API
-- [ ] WeChat Mini Program
+- [x] Mobile APP
 - [ ] RSS Subscription
 
 ## Star History
