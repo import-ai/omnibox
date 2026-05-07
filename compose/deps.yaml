@@ -3,7 +3,7 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-      meilisearch:
+      weaviate:
         condition: service_healthy
       minio:
         condition: service_healthy
@@ -14,12 +14,12 @@ services:
 
   wizard:
     depends_on:
-      meilisearch:
+      weaviate:
         condition: service_healthy
 
   wizard-worker:
     depends_on:
-      meilisearch:
+      weaviate:
         condition: service_healthy
 
   postgres:
@@ -57,16 +57,33 @@ services:
       timeout: 3s
       retries: 5
 
-  meilisearch:
-    image: getmeili/meilisearch:v1.14
-    restart: always
+  weaviate:
+    image: cr.weaviate.io/semitechnologies/weaviate:1.36.0
+    restart: unless-stopped
+    command:
+      - --host
+      - 0.0.0.0
+      - --port
+      - "50050"
+      - --scheme
+      - http
+    working_dir: "/go/pkg/mod"
     environment:
-      MEILI_MASTER_KEY: ${GLOBAL_MEILI_KEY}
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'false'
+      AUTHENTICATION_APIKEY_ENABLED: 'true'
+      AUTHENTICATION_APIKEY_ALLOWED_KEYS: 'omnibox'
+      AUTHENTICATION_APIKEY_USERS: 'omnibox'
+      QUERY_DEFAULTS_LIMIT: "25"
+      AUTOSCHEMA_ENABLED: "false"
+      ENABLE_TOKENIZER_GSE_CH: "true"
+      PERSISTENCE_DATA_PATH: /var/lib/weaviate
+      CLUSTER_HOSTNAME: node-1
+      LOG_LEVEL: debug
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
-      - '${PWD}/data/meili_data:/meili_data'
+      - '${PWD}/data/weaviate:/var/lib/weaviate'
     healthcheck:
-      test: [ "CMD", "curl", "-I", "http://127.0.0.1:7700/health" ]
+      test: [ "CMD", "wget", "-q", "-O-", "http://127.0.0.1:50050/v1/.well-known/ready" ]
       interval: 5s
       timeout: 3s
       retries: 5
