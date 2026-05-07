@@ -60,7 +60,7 @@ services:
       - .env
     volumes:
       - '/etc/localtime:/etc/localtime:ro'
-    entrypoint: ['python', 'main.py']
+    entrypoint: ["uv", "run", "--no-sync", "python3", "main.py"]
     command: ['--workers', '1']
     healthcheck:
       test: ['CMD', 'wget', '-q', '-O-', 'http://127.0.0.1:8000/health']
