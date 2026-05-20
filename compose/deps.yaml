@@ -7,7 +7,7 @@ services:
         condition: service_healthy
       minio:
         condition: service_healthy
-      mailhog:
+      mailpit:
         condition: service_healthy
       kafka:
         condition: service_healthy
@@ -114,11 +114,11 @@ services:
       retries: 5
       start_period: 30s
 
-  mailhog:
-    image: mailhog/mailhog:v1.0.1
+  mailpit:
+    image: axllent/mailpit:v1.29
     restart: always
     ports:
-      - "${MAILHOG_WEB_PORT:-8025}:8025"  # Web UI
+      - "${MAILPIT_WEB_PORT:-8025}:8025"  # Web UI
     volumes:
       - /etc/localtime:/etc/localtime:ro
     healthcheck:

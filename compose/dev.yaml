@@ -46,7 +46,7 @@ services:
     ports:
       - "9092:9092"
 
-  mailhog:
+  mailpit:
     ports:
       - "1025:1025"
 
