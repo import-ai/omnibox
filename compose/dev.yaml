@@ -46,7 +46,7 @@ services:
     ports:
       - "9092:9092"
 
-  mailpit:
+  mail-server:
     ports:
       - "1025:1025"
 
