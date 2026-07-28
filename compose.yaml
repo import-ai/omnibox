@@ -2,7 +2,7 @@ name: omnibox
 
 services:
   web:
-    image: ghcr.io/import-ai/omnibox-web:0.1.40
+    image: ghcr.io/import-ai/omnibox-web:0.1.41
     volumes:
       - '/etc/localtime:/etc/localtime:ro'
     ports:
