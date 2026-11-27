@@ -32,7 +32,7 @@ services:
         condition: service_healthy
 
   wizard:
-    image: ghcr.io/import-ai/omnibox-wizard:0.1.59
+    image: ghcr.io/import-ai/omnibox-wizard:0.1.60-beta.1
     restart: always
     volumes:
       - '/etc/localtime:/etc/localtime:ro'
@@ -50,7 +50,7 @@ services:
       start_period: 5s
 
   wizard-worker:
-    image: ghcr.io/import-ai/omnibox-wizard:0.1.59
+    image: ghcr.io/import-ai/omnibox-wizard:0.1.60-beta.1
     restart: always
     environment:
       ENV: prod
